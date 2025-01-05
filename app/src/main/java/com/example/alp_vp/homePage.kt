@@ -1,5 +1,7 @@
 package com.example.alp_vp
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,7 +27,6 @@ fun HomePage() {
                 .fillMaxWidth()
                 .padding(top = 40.dp, start = 20.dp, end = 20.dp, bottom = 20.dp)
         ) {
-            //TopAppBar
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -67,7 +68,7 @@ fun HomePage() {
                 }
             }
         }
-        //Content
+
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -80,44 +81,97 @@ fun HomePage() {
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Box(
+                Row {
+                    Box(
+                        modifier = Modifier
+                            .background(Color(0xFFFFD59E), shape = RoundedCornerShape(16.dp))
+                            .padding(24.dp)
+                            .weight(0.7f),
+
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_person),
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(28.dp)
+                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Text(
+                                text = "Welcome to Park hub's Dashboard, John Doe!",
+                                color = Color.Black,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+
+
+                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.notifications),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(68.dp)
+                            .padding(8.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(40.dp))
+                Text(
+                    text = "Recommended Lesson:",
+                    color = Color.Black,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Card(
+                    shape = RoundedCornerShape(12.dp),
+                    border = BorderStroke(1.dp, Color.Black),
+                    elevation = CardDefaults.elevatedCardElevation(0.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFFFFD59E), shape = RoundedCornerShape(16.dp))
-                        .padding(24.dp),
-                    contentAlignment = Alignment.CenterStart
+                        .padding(vertical = 8.dp)
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_person),
-                            contentDescription = null,
-                            tint = Color.Black,
-                            modifier = Modifier.size(28.dp)
-                        )
-                        Spacer(modifier = Modifier.width(12.dp))
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
                         Text(
-                            text = "Welcome to Park hub's Dashboard, John Doe!",
-                            color = Color.Black,
+                            text = "Cara Parkir Paralel",
+                            fontWeight = FontWeight.Bold,
                             fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold
+                            color = Color.Black
                         )
-                        Spacer(modifier = Modifier.weight(1f))
-                        Icon(
-                            painter = painterResource(id = R.drawable.notifications),
-                            contentDescription = null,
-                            tint = Color.Black,
-                            modifier = Modifier.size(28.dp)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Lesson ini berisi materi lengkap mengenai cara parkir paralel.",
+                            fontSize = 16.sp,
+                            color = Color.Gray
                         )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(
+                            onClick = { /* Handle Learn button click */ },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xffffa001)),
+                            shape = RoundedCornerShape(8.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                text = "Learn",
+                                color = Color.White,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
                 }
-
-                Spacer(modifier = Modifier.height(40.dp))
             }
 
         }
 
         //Bottom Navigation
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
