@@ -11,8 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,6 +70,7 @@ fun HomePage() {
                 }
             }
         }
+        Spacer(modifier = Modifier.height(5.dp))
 
         Box(
             modifier = Modifier
@@ -81,7 +84,7 @@ fun HomePage() {
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
                         modifier = Modifier
                             .background(Color(0xFFFFD59E), shape = RoundedCornerShape(16.dp))
@@ -118,7 +121,92 @@ fun HomePage() {
                             .padding(8.dp)
                     )
                 }
+                Spacer(modifier = Modifier.height(20.dp))
+                Text(
+                    text = "Available spots:",
+                    color = Color.Black,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                    Box(
+                        modifier = Modifier.size(110.dp).clip(RoundedCornerShape(4.dp)).background(Color.Gray)
+                    ){
+                        Image(
+                            painter = painterResource(R.drawable.gedung), contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier.align(Alignment.Center).padding(8.dp).background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(4.dp))
+                        ){
+                            Text(
+                                text = "Gedung: 4 slots left",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier.size(110.dp).clip(RoundedCornerShape(4.dp)).background(Color.Gray)
+                    ){
+                        Image(
+                            painter = painterResource(R.drawable.bukit), contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier.align(Alignment.Center).padding(8.dp).background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(4.dp))
+                        ){
+                            Text(
+                                text = "Bukit: 4 slots left",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier.size(110.dp).clip(RoundedCornerShape(4.dp)).background(Color.Gray)
+                    ){
+                        Image(
+                            painter = painterResource(R.drawable.lapangan), contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop
+                        )
+                        Box(
+                            modifier = Modifier.align(Alignment.Center).padding(8.dp).background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(4.dp))
+                        ){
+                            Text(
+                                text = "Lapangan: 4 slots left",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                }
                 Spacer(modifier = Modifier.height(40.dp))
+                Box(
+                    modifier = Modifier.fillMaxWidth().height(40.dp).clip(RoundedCornerShape(6.dp)).background(Color.Gray)
+                ){
+                    Image(
+                        painter = painterResource(R.drawable.report), contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+
+                    Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(0.4f)))
+
+                    Row(modifier = Modifier.align(Alignment.Center), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                        Text(
+                            text = "Detail Reports!",
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black,
+                            fontSize = 24.sp
+                        )
+                        Image(
+                            painter = painterResource(R.drawable.baseline_report_24), contentDescription = null
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(35.dp))
                 Text(
                     text = "Recommended Lesson:",
                     color = Color.Black,
