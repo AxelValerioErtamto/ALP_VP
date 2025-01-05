@@ -131,6 +131,9 @@ fun RectangleWithImageAndText(imageRes: Int, text: String) {
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
+        Box(
+            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.4f))
+        )
         // Overlay Text
         Text(
             text = text,
