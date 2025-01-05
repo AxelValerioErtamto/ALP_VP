@@ -1,12 +1,8 @@
 package com.example.alp_vp
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,15 +12,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun LessonPage() {
+fun AdminPage() {
     Column(modifier = Modifier.fillMaxSize()) {
-        // TopAppBar
         Column(
             modifier = Modifier
                 .background(color = Color(0xffffa001))
@@ -73,7 +66,6 @@ fun LessonPage() {
             }
         }
 
-        // Content Area
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -86,70 +78,64 @@ fun LessonPage() {
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.Black,
-                        modifier = Modifier.size(32.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Available Lessons:",
-                        color = Color.Black,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Card(
-                    shape = RoundedCornerShape(12.dp),
-                    border = BorderStroke(1.dp, Color.Black),
-                    elevation = CardDefaults.elevatedCardElevation(0.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                        .background(Color(0xFFFFD59E), shape = RoundedCornerShape(16.dp))
+                        .padding(24.dp),
+                    contentAlignment = Alignment.CenterStart
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_person),
+                            contentDescription = null,
+                            tint = Color.Black,
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = "Cara Parkir Paralel",
-                            fontWeight = FontWeight.Bold,
+                            text = "You are logged in as\nAdmin.",
+                            color = Color.Black,
                             fontSize = 20.sp,
-                            color = Color.Black
+                            fontWeight = FontWeight.Bold
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = "Lesson ini berisi materi lengkap mengenai cara parkir paralel.",
-                            fontSize = 16.sp,
-                            color = Color.Gray
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = { /* Handle Learn button click */ },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xffffa001)),
-                            shape = RoundedCornerShape(8.dp),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = "Learn",
-                                color = Color.White,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
                     }
+                }
+
+                Spacer(modifier = Modifier.height(40.dp))
+
+                Button(
+                    onClick = { /* Add action */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(72.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFA726),
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(text = "Create Lesson", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Button(
+                    onClick = { /* Add action */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(72.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFA726),
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(text = "Manage Lessons", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
 
-        // Bottom Navigation
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -165,25 +151,8 @@ fun LessonPage() {
     }
 }
 
-@Composable
-fun NavigationItem(imageRes: Int, label: String, iconSize: Dp = 24.dp, fontSize: TextUnit = 12.sp) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(
-            painter = painterResource(imageRes),
-            contentDescription = label,
-            modifier = Modifier.size(iconSize)
-        )
-        Spacer(modifier = Modifier.height(6.dp))
-        Text(
-            text = label,
-            color = Color.White,
-            fontSize = fontSize
-        )
-    }
-}
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun LessonPagePreview() {
-    LessonPage()
+fun AdminPagePreview() {
+    AdminPage()
 }

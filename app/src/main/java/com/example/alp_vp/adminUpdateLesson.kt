@@ -1,7 +1,5 @@
 package com.example.alp_vp
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,16 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun LessonPage() {
+fun AdminUpdateLesson() {
     Column(modifier = Modifier.fillMaxSize()) {
         // TopAppBar
         Column(
@@ -86,68 +81,108 @@ fun LessonPage() {
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
+                // Back arrow and "Create Lesson" title
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(bottom = 16.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.ArrowBack,
+                        imageVector = Icons.Default.ArrowBack, // Use Material icon
                         contentDescription = "Back",
-                        tint = Color.Black,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.Black
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Available Lessons:",
-                        color = Color.Black,
+                        text = "Update Lesson",
                         fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
                     )
                 }
-                Card(
-                    shape = RoundedCornerShape(12.dp),
-                    border = BorderStroke(1.dp, Color.Black),
-                    elevation = CardDefaults.elevatedCardElevation(0.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+
+                // Title
+                Text(text = "Title:", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.Black)
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = { /* Handle title input */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    placeholder = { Text(text = "Enter title here") },
+                    shape = RoundedCornerShape(8.dp)
+                )
+
+                // Description
+                Text(text = "Description:", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.Black)
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = { /* Handle description input */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    placeholder = { Text(text = "Enter description here") },
+                    shape = RoundedCornerShape(8.dp)
+                )
+
+                // Content
+                Text(text = "Content:", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.Black)
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = { /* Handle content input */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                        .padding(vertical = 8.dp),
+                    placeholder = { Text(text = "Enter content here") },
+                    shape = RoundedCornerShape(8.dp)
+                )
+
+                Text(text = "Image / Illustration:", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.Black)
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
+                        .height(56.dp)
+                        .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(8.dp)),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
                     ) {
-                        Text(
-                            text = "Cara Parkir Paralel",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                            color = Color.Black
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Upload Icon",
+                            modifier = Modifier.size(24.dp),
+                            tint = Color.Gray
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = "Lesson ini berisi materi lengkap mengenai cara parkir paralel.",
-                            fontSize = 16.sp,
-                            color = Color.Gray
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = { /* Handle Learn button click */ },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xffffa001)),
-                            shape = RoundedCornerShape(8.dp),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = "Learn",
-                                color = Color.White,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = "Add file", fontSize = 16.sp, color = Color.Gray)
                     }
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+
+                Button(
+                    onClick = { /* Handle create action */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFA726),
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(text = "Update", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
+
+
+
 
         // Bottom Navigation
         Row(
@@ -165,25 +200,8 @@ fun LessonPage() {
     }
 }
 
-@Composable
-fun NavigationItem(imageRes: Int, label: String, iconSize: Dp = 24.dp, fontSize: TextUnit = 12.sp) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(
-            painter = painterResource(imageRes),
-            contentDescription = label,
-            modifier = Modifier.size(iconSize)
-        )
-        Spacer(modifier = Modifier.height(6.dp))
-        Text(
-            text = label,
-            color = Color.White,
-            fontSize = fontSize
-        )
-    }
-}
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun LessonPagePreview() {
-    LessonPage()
+fun AdminUpdateLessonPreview() {
+    AdminUpdateLesson()
 }

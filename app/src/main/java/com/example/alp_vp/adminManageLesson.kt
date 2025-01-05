@@ -1,7 +1,6 @@
 package com.example.alp_vp
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,16 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun LessonPage() {
+fun AdminManageLesson() {
     Column(modifier = Modifier.fillMaxSize()) {
         // TopAppBar
         Column(
@@ -86,6 +82,7 @@ fun LessonPage() {
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
+                // Title with Icon
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(bottom = 16.dp)
@@ -104,6 +101,8 @@ fun LessonPage() {
                         fontWeight = FontWeight.Bold
                     )
                 }
+
+                // Lesson Card
                 Card(
                     shape = RoundedCornerShape(12.dp),
                     border = BorderStroke(1.dp, Color.Black),
@@ -131,18 +130,38 @@ fun LessonPage() {
                             color = Color.Gray
                         )
                         Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = { /* Handle Learn button click */ },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xffffa001)),
-                            shape = RoundedCornerShape(8.dp),
-                            modifier = Modifier.fillMaxWidth()
+
+                        // Row for Update and Delete buttons
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text(
-                                text = "Learn",
-                                color = Color.White,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
+                            Button(
+                                onClick = { /* Handle Update button click */ },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA001)),
+                                shape = RoundedCornerShape(8.dp),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(
+                                    text = "Update",
+                                    color = Color.White,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                            Button(
+                                onClick = { /* Handle Delete button click */ },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9534F)),
+                                shape = RoundedCornerShape(8.dp),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(
+                                    text = "Delete",
+                                    color = Color.White,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
                         }
                     }
                 }
@@ -165,25 +184,8 @@ fun LessonPage() {
     }
 }
 
-@Composable
-fun NavigationItem(imageRes: Int, label: String, iconSize: Dp = 24.dp, fontSize: TextUnit = 12.sp) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(
-            painter = painterResource(imageRes),
-            contentDescription = label,
-            modifier = Modifier.size(iconSize)
-        )
-        Spacer(modifier = Modifier.height(6.dp))
-        Text(
-            text = label,
-            color = Color.White,
-            fontSize = fontSize
-        )
-    }
-}
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun LessonPagePreview() {
-    LessonPage()
+fun AdminManageLessonPreview() {
+    AdminManageLesson()
 }
