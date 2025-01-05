@@ -101,13 +101,13 @@ fun Bukit() {
                         .padding(8.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    for (i in 0 .. 12) {
+                    for (i in 0 until 12) {
                         Verti(isFilled[i])
                     }
                 }
                 Row {
                     Column(Modifier.padding(8.dp)) {
-                        for (i in 12 .. isFilled.size) {
+                        for (i in 12 until isFilled.size) {
                             Horiz(isFilled[i])
                         }
                     }
