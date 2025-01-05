@@ -28,9 +28,11 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Bukit() {
-    val verti = arrayOf(true, false, false, true, true, true, false, true, false, true, false, false)
-    val horiz = arrayOf(true, true, true, false, false, true, false, true, true, false, true, false, true, false, true, false, true, true, false, true, false, true)
-
+    val isFilled = arrayOf(
+        true, false, false, true, true, true, false, true, false, true, false, false,
+        true, true, true, false, false, true, false, true, true, false, true, false, true,
+        false, true, true, false, true, false, true
+    )
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -99,14 +101,14 @@ fun Bukit() {
                         .padding(8.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    for (filled in verti) {
-                        Verti(filled)
+                    for (i in 0 .. 12) {
+                        Verti(isFilled[i])
                     }
                 }
                 Row {
                     Column(Modifier.padding(8.dp)) {
-                        for (filled in horiz) {
-                            Horiz(filled)
+                        for (i in 12 .. isFilled.size) {
+                            Horiz(isFilled[i])
                         }
                     }
                     Column(
