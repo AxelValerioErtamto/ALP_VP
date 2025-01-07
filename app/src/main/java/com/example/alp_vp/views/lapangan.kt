@@ -1,4 +1,4 @@
-package com.example.alp_vp
+package com.example.alp_vp.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,12 +25,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.alp_vp.R
+import com.example.alp_vp.ui.theme.ALP_VPTheme
 
 @Composable
-fun Gedung() {
+fun Lapangan() {
     val isFilled = arrayOf(
-        true, false, false, true, true, true, false, true, false, false, true, false,
-        false, true, false, false, true, true, true, false, false, true, false, true
+        true, false, false, true, true, true, false, true, false, true, false, false,
+        true, true, true, false, false, true, false, true, true, false, true, false, true,
+        false, true, true, false, true, false, true, true, false, false, true, true, true,
+        true, false, false, true, true, true, false, true, false, true, false, false,
+        true, true, true, false, false, true, false, true, true, false, true, false, true,
+        false, true, true, false, true, false, true, true, false, false, true, true, true,
+        false, true, false, true, false, false, true, true, true, false, false, true, false,
+        true, true, false,
     )
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -89,22 +97,97 @@ fun Gedung() {
                 .background(Color.White),
             contentAlignment = Alignment.TopStart
         ) {
-            Row(
+            Column(
                 Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
-                Column {
-                    for (i in 0 until 12) {
-                        HorizGedung(isFilled[i])
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(80.dp)
+                        .background(Color.Gray),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text("Parkiran motor", color = Color.White, fontSize = 24.sp)
+                }
+                Spacer(Modifier.height(8.dp))
+                Row(
+                    Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    for (i in 0 until 15) {
+                        VertiLapangan(isFilled[i])
                     }
                 }
-                Text("5", fontSize = 64.sp, fontWeight = FontWeight.W500)
-                Column {
-                    for (i in 12 until isFilled.size) {
-                        HorizGedung(isFilled[i])
+                Spacer(Modifier.height(32.dp))
+                Row {
+                    Column(
+                        Modifier
+                            .size(140.dp, 220.dp)
+                            .background(Color.Gray),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text("Lapangan basket", color = Color.White, fontSize = 16.sp)
+                    }
+                    Spacer(Modifier.width(18.dp))
+                    Column {
+                        Row {
+                            for (i in 15 until 23) {
+                                VertiLapangan(isFilled[i])
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Row {
+                            for (i in 23 until 31) {
+                                VertiLapangan(isFilled[i])
+                            }
+                        }
+                        Spacer(Modifier.height(40.dp))
+                        Row {
+                            for (i in 31 until 39) {
+                                VertiLapangan(isFilled[i])
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Row {
+                            for (i in 39 until 47) {
+                                VertiLapangan(isFilled[i])
+                            }
+                        }
+                    }
+                }
+                Spacer(Modifier.height(32.dp))
+                Row(
+                    Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    for (i in 47 until 62) {
+                        VertiLapangan(isFilled[i])
+                    }
+                }
+                Spacer(Modifier.height(8.dp))
+                Row(
+                    Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    for (i in 62 until 77) {
+                        VertiLapangan(isFilled[i])
+                    }
+                }
+                Spacer(Modifier.height(32.dp))
+                Row(
+                    Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    for (i in 77 until 92) {
+                        VertiLapangan(isFilled[i])
                     }
                 }
             }
@@ -127,8 +210,8 @@ fun Gedung() {
 }
 
 @Composable
-fun HorizGedung(isFilled: Boolean) {
-    Spacer(Modifier.height(4.dp))
+fun VertiLapangan(isFilled: Boolean) {
+    Spacer(Modifier.width(2.dp))
     Box(
         Modifier
             .background(
@@ -138,14 +221,17 @@ fun HorizGedung(isFilled: Boolean) {
                     Color.Green
                 }
             )
-            .size(80.dp, 40.dp)
+            .size(20.dp, 40.dp)
     )
-    Spacer(Modifier.height(4.dp))
+    Spacer(Modifier.width(2.dp))
 }
+
 
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun GedungPreview() {
-    Gedung()
+fun LapanganPreview() {
+    ALP_VPTheme {
+        Lapangan()
+    }
 }

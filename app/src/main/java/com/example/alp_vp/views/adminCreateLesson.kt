@@ -1,4 +1,4 @@
-package com.example.alp_vp
+package com.example.alp_vp.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.alp_vp.R
 
 @Composable
 fun AdminCreateLesson() {

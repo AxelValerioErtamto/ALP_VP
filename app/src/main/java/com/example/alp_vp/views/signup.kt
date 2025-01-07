@@ -1,4 +1,4 @@
-package com.example.alp_vp
+package com.example.alp_vp.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -70,7 +70,7 @@ fun Register() {
                 Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(8.dp)),
-                label = { Text("Email / Username") },
+                label = { Text("Username") },
                 colors = TextFieldDefaults.colors(
                     unfocusedContainerColor = Color.White,
                     focusedContainerColor = Color.White,
@@ -127,7 +127,7 @@ fun Register() {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun LoginPreview() {
+fun RegisterPreview() {
     ALP_VPTheme {
         Register()
     }
