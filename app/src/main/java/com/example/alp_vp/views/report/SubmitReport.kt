@@ -1,4 +1,4 @@
-package com.example.alp_vp.views
+package com.example.alp_vp.views.report
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.alp_vp.R
 import com.example.alp_vp.ui.theme.ALP_VPTheme
+import com.example.alp_vp.views.lesson.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

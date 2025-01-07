@@ -1,4 +1,4 @@
-package com.example.alp_vp.views
+package com.example.alp_vp.views.location
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.alp_vp.R
 import com.example.alp_vp.ui.theme.ALP_VPTheme
+import com.example.alp_vp.views.lesson.NavigationItem
 
 @Composable
 fun LocationPageView() {

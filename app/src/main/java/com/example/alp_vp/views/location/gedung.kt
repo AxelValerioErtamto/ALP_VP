@@ -1,4 +1,4 @@
-package com.example.alp_vp.views
+package com.example.alp_vp.views.location
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,13 +26,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.alp_vp.R
+import com.example.alp_vp.views.lesson.NavigationItem
 
 @Composable
-fun Bukit() {
+fun Gedung() {
     val isFilled = arrayOf(
-        true, false, false, true, true, true, false, true, false, true, false, false,
-        true, true, true, false, false, true, false, true, true, false, true, false, true,
-        false, true, true, false, true, false, true
+        true, false, false, true, true, true, false, true, false, false, true, false,
+        false, true, false, false, true, true, true, false, false, true, false, true
     )
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -89,38 +89,24 @@ fun Bukit() {
                 .weight(1f)
                 .fillMaxWidth()
                 .background(Color.White),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.TopStart
         ) {
-            Column(
+            Row(
                 Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    for (i in 0 until 18) {
-                        VertiBukit(isFilled[i])
+                Column {
+                    for (i in 0 until 12) {
+                        HorizGedung(isFilled[i])
                     }
                 }
-                Row {
-                    Column(Modifier.padding(8.dp)) {
-                        for (i in 14 until isFilled.size) {
-                            HorizBukit(isFilled[i])
-                        }
-                    }
-                    Column(
-                        Modifier
-                            .fillMaxWidth()
-                            .height(400.dp)
-                            .background(Color.Gray),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text("Bukit", color = Color.White, fontSize = 40.sp)
+                Text("5", fontSize = 64.sp, fontWeight = FontWeight.W500)
+                Column {
+                    for (i in 12 until isFilled.size) {
+                        HorizGedung(isFilled[i])
                     }
                 }
             }
@@ -143,8 +129,8 @@ fun Bukit() {
 }
 
 @Composable
-fun VertiBukit(isFilled: Boolean) {
-    Spacer(Modifier.width(2.dp))
+fun HorizGedung(isFilled: Boolean) {
+    Spacer(Modifier.height(4.dp))
     Box(
         Modifier
             .background(
@@ -154,31 +140,14 @@ fun VertiBukit(isFilled: Boolean) {
                     Color.Green
                 }
             )
-            .size(12.dp, 24.dp)
+            .size(80.dp, 40.dp)
     )
-    Spacer(Modifier.width(2.dp))
-}
-
-@Composable
-fun HorizBukit(isFilled: Boolean) {
-    Spacer(Modifier.height(2.dp))
-    Box(
-        Modifier
-            .background(
-                if (isFilled) {
-                    Color.Red
-                } else {
-                    Color.Green
-                }
-            )
-            .size(24.dp, 12.dp)
-    )
-    Spacer(Modifier.height(2.dp))
+    Spacer(Modifier.height(4.dp))
 }
 
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun BukitPreview() {
-    Bukit()
+fun GedungPreview() {
+    Gedung()
 }

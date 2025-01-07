@@ -1,15 +1,16 @@
-package com.example.alp_vp.views
+package com.example.alp_vp.views.lesson
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,8 +18,9 @@ import androidx.compose.ui.unit.sp
 import com.example.alp_vp.R
 
 @Composable
-fun AdminPage() {
+fun AdminUpdateLesson() {
     Column(modifier = Modifier.fillMaxSize()) {
+        // TopAppBar
         Column(
             modifier = Modifier
                 .background(color = Color(0xffffa001))
@@ -67,6 +69,7 @@ fun AdminPage() {
             }
         }
 
+        // Content Area
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -79,64 +82,110 @@ fun AdminPage() {
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
+                // Back arrow and "Create Lesson" title
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack, // Use Material icon
+                        contentDescription = "Back",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Update Lesson",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+                }
+
+                // Title
+                Text(text = "Title:", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.Black)
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = { /* Handle title input */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    placeholder = { Text(text = "Enter title here") },
+                    shape = RoundedCornerShape(8.dp)
+                )
+
+                // Description
+                Text(text = "Description:", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.Black)
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = { /* Handle description input */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    placeholder = { Text(text = "Enter description here") },
+                    shape = RoundedCornerShape(8.dp)
+                )
+
+                // Content
+                Text(text = "Content:", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.Black)
+                OutlinedTextField(
+                    value = "",
+                    onValueChange = { /* Handle content input */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                        .padding(vertical = 8.dp),
+                    placeholder = { Text(text = "Enter content here") },
+                    shape = RoundedCornerShape(8.dp)
+                )
+
+                Text(text = "Image / Illustration:", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.Black)
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFFFFD59E), shape = RoundedCornerShape(16.dp))
-                        .padding(24.dp),
-                    contentAlignment = Alignment.CenterStart
+                        .padding(vertical = 8.dp)
+                        .height(56.dp)
+                        .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(8.dp)),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_person),
-                            contentDescription = null,
-                            tint = Color.Black,
-                            modifier = Modifier.size(28.dp)
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Upload Icon",
+                            modifier = Modifier.size(24.dp),
+                            tint = Color.Gray
                         )
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Text(
-                            text = "You are logged in as\nAdmin.",
-                            color = Color.Black,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold
-                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = "Add file", fontSize = 16.sp, color = Color.Gray)
                     }
-                }
-
-                Spacer(modifier = Modifier.height(40.dp))
-
-                Button(
-                    onClick = { /* Add action */ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(72.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFFA726),
-                        contentColor = Color.White
-                    ),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Text(text = "Create Lesson", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
 
+
                 Button(
-                    onClick = { /* Add action */ },
+                    onClick = { /* Handle create action */ },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(72.dp),
+                        .height(56.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFFFA726),
                         contentColor = Color.White
                     ),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(text = "Manage Lessons", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "Update", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
 
+
+
+
+        // Bottom Navigation
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -154,6 +203,6 @@ fun AdminPage() {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun AdminPagePreview() {
-    AdminPage()
+fun AdminUpdateLessonPreview() {
+    AdminUpdateLesson()
 }
