@@ -1,4 +1,4 @@
-package com.example.alp_vp
+package com.example.alp_vp.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

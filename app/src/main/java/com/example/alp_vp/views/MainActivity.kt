@@ -1,4 +1,4 @@
-package com.example.alp_vp
+package com.example.alp_vp.views
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -1,30 +1,40 @@
-package com.example.alp_vp
+package com.example.alp_vp.views
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.alp_vp.R
 
 @Composable
-fun LessonPage() {
+fun Bukit() {
+    val isFilled = arrayOf(
+        true, false, false, true, true, true, false, true, false, true, false, false,
+        true, true, true, false, false, true, false, true, true, false, true, false, true,
+        false, true, true, false, true, false, true
+    )
     Column(modifier = Modifier.fillMaxSize()) {
-        // TopAppBar
         Column(
             modifier = Modifier
                 .background(color = Color(0xffffa001))
@@ -87,63 +97,29 @@ fun LessonPage() {
                     .padding(16.dp)
             ) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.Black,
-                        modifier = Modifier.size(32.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Available Lessons:",
-                        color = Color.Black,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Card(
-                    shape = RoundedCornerShape(12.dp),
-                    border = BorderStroke(1.dp, Color.Black),
-                    elevation = CardDefaults.elevatedCardElevation(0.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    modifier = Modifier
+                    Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                        .padding(8.dp),
+                    horizontalArrangement = Arrangement.End
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
-                        Text(
-                            text = "Cara Parkir Paralel",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                            color = Color.Black
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = "Lesson ini berisi materi lengkap mengenai cara parkir paralel.",
-                            fontSize = 16.sp,
-                            color = Color.Gray
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = { /* Handle Learn button click */ },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xffffa001)),
-                            shape = RoundedCornerShape(8.dp),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = "Learn",
-                                color = Color.White,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
+                    for (i in 0 until 12) {
+                        Verti(isFilled[i])
+                    }
+                }
+                Row {
+                    Column(Modifier.padding(8.dp)) {
+                        for (i in 12 until isFilled.size) {
+                            Horiz(isFilled[i])
                         }
+                    }
+                    Column(
+                        Modifier
+                            .fillMaxSize()
+                            .background(Color.Gray),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text("Bukit", color = Color.White, fontSize = 40.sp)
                     }
                 }
             }
@@ -154,7 +130,7 @@ fun LessonPage() {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = Color(0xffffa001))
-                .padding(vertical = 16.dp),
+                .padding(vertical = 16.dp), // Increased padding
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -166,24 +142,42 @@ fun LessonPage() {
 }
 
 @Composable
-fun NavigationItem(imageRes: Int, label: String, iconSize: Dp = 24.dp, fontSize: TextUnit = 12.sp) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(
-            painter = painterResource(imageRes),
-            contentDescription = label,
-            modifier = Modifier.size(iconSize)
-        )
-        Spacer(modifier = Modifier.height(6.dp))
-        Text(
-            text = label,
-            color = Color.White,
-            fontSize = fontSize
-        )
-    }
+fun Verti(isFilled: Boolean) {
+    Spacer(Modifier.width(2.dp))
+    Box(
+        Modifier
+            .background(
+                if (isFilled) {
+                    Color.Red
+                } else {
+                    Color.Green
+                }
+            )
+            .size(20.dp, 40.dp)
+    )
+    Spacer(Modifier.width(2.dp))
 }
+
+@Composable
+fun Horiz(isFilled: Boolean) {
+    Spacer(Modifier.height(2.dp))
+    Box(
+        Modifier
+            .background(
+                if (isFilled) {
+                    Color.Red
+                } else {
+                    Color.Green
+                }
+            )
+            .size(40.dp, 20.dp)
+    )
+    Spacer(Modifier.height(2.dp))
+}
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun LessonPagePreview() {
-    LessonPage()
+fun BukitPreview() {
+    Bukit()
 }

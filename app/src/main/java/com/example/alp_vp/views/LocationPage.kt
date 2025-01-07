@@ -1,39 +1,28 @@
-package com.example.alp_vp
+package com.example.alp_vp.views
 
-import android.app.Notification
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.alp_vp.R
 import com.example.alp_vp.ui.theme.ALP_VPTheme
 
 @Composable
-fun NotificationPageView() {
+fun LocationPageView() {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             // TopAppBar
@@ -46,7 +35,7 @@ fun NotificationPageView() {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
@@ -84,21 +73,33 @@ fun NotificationPageView() {
                     }
                 }
             }
-            LazyColumn(
+
+            // Vertical Rectangles with Images
+            Column(
                 modifier = Modifier
-                    .padding(top = 20.dp)
                     .fillMaxSize()
+                    .padding(horizontal = 16.dp).padding(top = 30.dp)
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(30.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(10) { index ->
-                    NotificationItem(
-                        title = "New Lesson $index",
-                        description = "This is a description for Lesson $index.",
-                        onClearClick = { /* Handle clear notification */ }
-                    )
-                    Divider(modifier = Modifier.padding(vertical = 8.dp))
-                }
+                // Rectangle 1: Gedung
+                RectangleWithImageAndText(
+                    imageRes = R.drawable.gedung,
+                    text = "Gedung"
+                )
+                // Rectangle 2: Bukit
+                RectangleWithImageAndText(
+                    imageRes = R.drawable.bukit,
+                    text = "Bukit"
+                )
+                // Rectangle 3: Lapangan
+                RectangleWithImageAndText(
+                    imageRes = R.drawable.lapangan,
+                    text = "Lapangan"
+                )
             }
-    }
+        }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -116,50 +117,41 @@ fun NotificationPageView() {
 }
 
 @Composable
-fun NotificationItem(title: String, description: String, onClearClick: () -> Unit) {
-    Row(
+fun RectangleWithImageAndText(imageRes: Int, text: String) {
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .height(160.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(Color.LightGray)
     ) {
-        // Notification Content
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = title,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = description,
-                fontSize = 14.sp,
-                color = Color.Gray
-            )
-        }
-
-        // Clear Icon
-        Button(
-            onClick = onClearClick,
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-            shape = RoundedCornerShape(50),
-            modifier = Modifier.align(Alignment.CenterVertically)
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.baseline_clear_24),
-                contentDescription = "Clear Notification",
-                tint = Color(0xFFD9534F),
-                modifier = Modifier.size(20.dp)
-            )
-        }
+        // Background Image
+        Image(
+            painter = painterResource(id = imageRes),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+        Box(
+            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.4f))
+        )
+        // Overlay Text
+        Text(
+            text = text,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = 8.dp)
+        )
     }
 }
 
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun NotificationPagePreview() {
+fun LocationPagePreview() {
     ALP_VPTheme {
-        NotificationPageView()
+        LocationPageView()
     }
 }

@@ -1,38 +1,23 @@
-package com.example.alp_vp
+package com.example.alp_vp.views
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.alp_vp.R
 
 @Composable
-fun Bukit() {
-    val isFilled = arrayOf(
-        true, false, false, true, true, true, false, true, false, true, false, false,
-        true, true, true, false, false, true, false, true, true, false, true, false, true,
-        false, true, true, false, true, false, true
-    )
+fun AdminPage() {
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -82,7 +67,6 @@ fun Bukit() {
             }
         }
 
-        // Content Area
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -95,41 +79,69 @@ fun Bukit() {
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Row(
-                    Modifier
+                Box(
+                    modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
-                    horizontalArrangement = Arrangement.End
+                        .background(Color(0xFFFFD59E), shape = RoundedCornerShape(16.dp))
+                        .padding(24.dp),
+                    contentAlignment = Alignment.CenterStart
                 ) {
-                    for (i in 0 until 12) {
-                        Verti(isFilled[i])
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_person),
+                            contentDescription = null,
+                            tint = Color.Black,
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            text = "You are logged in as\nAdmin.",
+                            color = Color.Black,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
-                Row {
-                    Column(Modifier.padding(8.dp)) {
-                        for (i in 12 until isFilled.size) {
-                            Horiz(isFilled[i])
-                        }
-                    }
-                    Column(
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color.Gray),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text("Bukit", color = Color.White, fontSize = 40.sp)
-                    }
+
+                Spacer(modifier = Modifier.height(40.dp))
+
+                Button(
+                    onClick = { /* Add action */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(72.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFA726),
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(text = "Create Lesson", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Button(
+                    onClick = { /* Add action */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(72.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFA726),
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(text = "Manage Lessons", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
 
-        // Bottom Navigation
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = Color(0xffffa001))
-                .padding(vertical = 16.dp), // Increased padding
+                .padding(vertical = 16.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -140,43 +152,8 @@ fun Bukit() {
     }
 }
 
-@Composable
-fun Verti(isFilled: Boolean) {
-    Spacer(Modifier.width(2.dp))
-    Box(
-        Modifier
-            .background(
-                if (isFilled) {
-                    Color.Red
-                } else {
-                    Color.Green
-                }
-            )
-            .size(20.dp, 40.dp)
-    )
-    Spacer(Modifier.width(2.dp))
-}
-
-@Composable
-fun Horiz(isFilled: Boolean) {
-    Spacer(Modifier.height(2.dp))
-    Box(
-        Modifier
-            .background(
-                if (isFilled) {
-                    Color.Red
-                } else {
-                    Color.Green
-                }
-            )
-            .size(40.dp, 20.dp)
-    )
-    Spacer(Modifier.height(2.dp))
-}
-
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun BukitPreview() {
-    Bukit()
+fun AdminPagePreview() {
+    AdminPage()
 }

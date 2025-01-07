@@ -1,5 +1,6 @@
-package com.example.alp_vp
+package com.example.alp_vp.views
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -12,16 +13,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.alp_vp.R
 
 @Composable
-fun LessonDetail() {
+fun LessonPage() {
     Column(modifier = Modifier.fillMaxSize()) {
         // TopAppBar
         Column(
@@ -85,7 +87,6 @@ fun LessonDetail() {
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                // Row for the Back icon and title
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(bottom = 16.dp)
@@ -98,48 +99,63 @@ fun LessonDetail() {
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Cara Parkir Paralel:",
+                        text = "Available Lessons:",
                         color = Color.Black,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
                 }
-
-                // Image in the center with reduced horizontal padding
-                Image(
-                    painter = painterResource(id = R.drawable.paralelpark),
-                    contentDescription = "Paralel Park Image",
+                Card(
+                    shape = RoundedCornerShape(12.dp),
+                    border = BorderStroke(1.dp, Color.Black),
+                    elevation = CardDefaults.elevatedCardElevation(0.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp) // Adjust the height as needed
-                        .padding(horizontal = 16.dp) // Reduced left and right padding
-                        .padding(bottom = 16.dp),
-                    contentScale = ContentScale.Crop
-                )
-
-                // Justified text paragraph with reduced horizontal padding
-                Text(
-                    text = "This is a sample paragraph for the justified text under the image. " +
-                            "It should continue and fill the available space while maintaining justified alignment.\n\n" +
-                            "You can add more content here. The text will be wrapped and justified correctly. " +
-                            "This is an example of how to handle long text in a readable way using Jetpack Compose.",
-                    color = Color.Black,
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Justify,
-                    modifier = Modifier.padding(horizontal = 16.dp) // Reduced left and right padding
-                )
-
+                        .padding(vertical = 8.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Text(
+                            text = "Cara Parkir Paralel",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp,
+                            color = Color.Black
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Lesson ini berisi materi lengkap mengenai cara parkir paralel.",
+                            fontSize = 16.sp,
+                            color = Color.Gray
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(
+                            onClick = { /* Handle Learn button click */ },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xffffa001)),
+                            shape = RoundedCornerShape(8.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                text = "Learn",
+                                color = Color.White,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+                }
             }
-
         }
-
 
         // Bottom Navigation
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = Color(0xffffa001))
-                .padding(vertical = 16.dp), // Increased padding
+                .padding(vertical = 16.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -150,8 +166,25 @@ fun LessonDetail() {
     }
 }
 
+@Composable
+fun NavigationItem(imageRes: Int, label: String, iconSize: Dp = 24.dp, fontSize: TextUnit = 12.sp) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Image(
+            painter = painterResource(imageRes),
+            contentDescription = label,
+            modifier = Modifier.size(iconSize)
+        )
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(
+            text = label,
+            color = Color.White,
+            fontSize = fontSize
+        )
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun LessonDetailPreview() {
-    LessonDetail()
+fun LessonPagePreview() {
+    LessonPage()
 }
