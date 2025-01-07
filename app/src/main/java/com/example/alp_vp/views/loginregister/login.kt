@@ -133,13 +133,21 @@ fun Login(
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W400
                 )
-                Text(
+
+                Button(
+                    onClick = {
+                        navController.navigate(PagesEnum.Register.name)
+                    }
+                ) {
+                    Text(
                     "Register",
                     color = Color(0xffffa001),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W500,
-                    modifier = Modifier.padding(start = 4.dp)
-                )
+                    modifier = Modifier.padding(start = 4.dp),
+
+                    ) }
+
             }
         }
     }

@@ -158,7 +158,7 @@ class AuthenticationViewModel(
             dataStatus = AuthenticationStatusUIState.Loading
 
             try {
-                val call = authenticationRepository.register(usernameInput, emailInput, passwordInput)
+                val call = authenticationRepository.register(usernameInput,  passwordInput)
 //                dataStatus = UserDataStatusUIState.Success(registerResult)
 
                 call.enqueue(object: Callback<UserResponse>{
@@ -208,7 +208,7 @@ class AuthenticationViewModel(
         viewModelScope.launch {
             dataStatus = AuthenticationStatusUIState.Loading
             try {
-                val call = authenticationRepository.login(emailInput, passwordInput)
+                val call = authenticationRepository.login(usernameInput, passwordInput)
                 call.enqueue(object: Callback<UserResponse> {
                     override fun onResponse(call: Call<UserResponse>, res: Response<UserResponse>) {
                         if (res.isSuccessful) {
