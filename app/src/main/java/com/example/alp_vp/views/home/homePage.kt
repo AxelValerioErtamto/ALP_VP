@@ -1,5 +1,6 @@
 package com.example.alp_vp.views.home
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,17 +13,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.R
+import com.example.alp_vp.viewmodels.HomeViewModel
 import com.example.alp_vp.views.lesson.NavigationItem
 
 @Composable
-fun HomePage() {
+fun HomePage(
+    modifier: Modifier = Modifier,
+    homeViewModel: HomeViewModel,
+    navController: NavHostController,
+    token: String,
+    context: Context
+) {
     Column(modifier = Modifier.fillMaxSize()) {
 
         Column(
@@ -59,7 +71,9 @@ fun HomePage() {
                     }
                 }
                 Button(
-                    onClick = { /* Handle logout */ },
+                    onClick = {
+                        homeViewModel.logoutUser(token, navController)
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9534F)),
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.padding(4.dp)
@@ -131,16 +145,31 @@ fun HomePage() {
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(20.dp))
-                Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Box(
-                        modifier = Modifier.size(110.dp).clip(RoundedCornerShape(4.dp)).background(Color.Gray)
-                    ){
+                        modifier = Modifier
+                            .size(110.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(Color.Gray)
+                    ) {
                         Image(
-                            painter = painterResource(R.drawable.gedung), contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop
+                            painter = painterResource(R.drawable.gedung),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
                         )
                         Box(
-                            modifier = Modifier.align(Alignment.Center).padding(8.dp).background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(4.dp))
-                        ){
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(8.dp)
+                                .background(
+                                    Color.Black.copy(alpha = 0.6f),
+                                    RoundedCornerShape(4.dp)
+                                )
+                        ) {
                             Text(
                                 text = "Gedung: 4 slots left",
                                 color = Color.White,
@@ -150,14 +179,26 @@ fun HomePage() {
                         }
                     }
                     Box(
-                        modifier = Modifier.size(110.dp).clip(RoundedCornerShape(4.dp)).background(Color.Gray)
-                    ){
+                        modifier = Modifier
+                            .size(110.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(Color.Gray)
+                    ) {
                         Image(
-                            painter = painterResource(R.drawable.bukit), contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop
+                            painter = painterResource(R.drawable.bukit),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
                         )
                         Box(
-                            modifier = Modifier.align(Alignment.Center).padding(8.dp).background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(4.dp))
-                        ){
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(8.dp)
+                                .background(
+                                    Color.Black.copy(alpha = 0.6f),
+                                    RoundedCornerShape(4.dp)
+                                )
+                        ) {
                             Text(
                                 text = "Bukit: 4 slots left",
                                 color = Color.White,
@@ -167,14 +208,26 @@ fun HomePage() {
                         }
                     }
                     Box(
-                        modifier = Modifier.size(110.dp).clip(RoundedCornerShape(4.dp)).background(Color.Gray)
-                    ){
+                        modifier = Modifier
+                            .size(110.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(Color.Gray)
+                    ) {
                         Image(
-                            painter = painterResource(R.drawable.lapangan), contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop
+                            painter = painterResource(R.drawable.lapangan),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
                         )
                         Box(
-                            modifier = Modifier.align(Alignment.Center).padding(8.dp).background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(4.dp))
-                        ){
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(8.dp)
+                                .background(
+                                    Color.Black.copy(alpha = 0.6f),
+                                    RoundedCornerShape(4.dp)
+                                )
+                        ) {
                             Text(
                                 text = "Lapangan: 4 slots left",
                                 color = Color.White,
@@ -186,17 +239,27 @@ fun HomePage() {
                 }
                 Spacer(modifier = Modifier.height(40.dp))
                 Box(
-                    modifier = Modifier.fillMaxWidth().height(40.dp).clip(RoundedCornerShape(6.dp)).background(Color.Gray)
-                ){
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(Color.Gray)
+                ) {
                     Image(
                         painter = painterResource(R.drawable.report), contentDescription = null,
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
 
-                    Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(0.4f)))
+                    Box(modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(0.4f)))
 
-                    Row(modifier = Modifier.align(Alignment.Center), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                    Row(
+                        modifier = Modifier.align(Alignment.Center),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
                         Text(
                             text = "Detail Reports!",
                             fontWeight = FontWeight.Bold,
@@ -204,7 +267,8 @@ fun HomePage() {
                             fontSize = 24.sp
                         )
                         Image(
-                            painter = painterResource(R.drawable.baseline_report_24), contentDescription = null
+                            painter = painterResource(R.drawable.baseline_report_24),
+                            contentDescription = null
                         )
                     }
                 }
@@ -280,5 +344,13 @@ fun HomePage() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomePagePreview() {
-    HomePage()
+    HomePage(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
+        homeViewModel = viewModel(factory = HomeViewModel.Factory),
+        navController = rememberNavController(),
+        token = "",
+        context = LocalContext.current
+    )
 }
