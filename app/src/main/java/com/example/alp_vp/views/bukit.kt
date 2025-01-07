@@ -89,7 +89,7 @@ fun Bukit() {
                 .weight(1f)
                 .fillMaxWidth()
                 .background(Color.White),
-            contentAlignment = Alignment.TopStart
+            contentAlignment = Alignment.Center
         ) {
             Column(
                 Modifier
@@ -102,19 +102,20 @@ fun Bukit() {
                         .padding(8.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    for (i in 0 until 12) {
-                        Verti(isFilled[i])
+                    for (i in 0 until 18) {
+                        VertiBukit(isFilled[i])
                     }
                 }
                 Row {
                     Column(Modifier.padding(8.dp)) {
-                        for (i in 12 until isFilled.size) {
-                            Horiz(isFilled[i])
+                        for (i in 14 until isFilled.size) {
+                            HorizBukit(isFilled[i])
                         }
                     }
                     Column(
                         Modifier
-                            .fillMaxSize()
+                            .fillMaxWidth()
+                            .height(400.dp)
                             .background(Color.Gray),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
@@ -142,7 +143,7 @@ fun Bukit() {
 }
 
 @Composable
-fun Verti(isFilled: Boolean) {
+fun VertiBukit(isFilled: Boolean) {
     Spacer(Modifier.width(2.dp))
     Box(
         Modifier
@@ -153,13 +154,13 @@ fun Verti(isFilled: Boolean) {
                     Color.Green
                 }
             )
-            .size(20.dp, 40.dp)
+            .size(12.dp, 24.dp)
     )
     Spacer(Modifier.width(2.dp))
 }
 
 @Composable
-fun Horiz(isFilled: Boolean) {
+fun HorizBukit(isFilled: Boolean) {
     Spacer(Modifier.height(2.dp))
     Box(
         Modifier
@@ -170,7 +171,7 @@ fun Horiz(isFilled: Boolean) {
                     Color.Green
                 }
             )
-            .size(40.dp, 20.dp)
+            .size(24.dp, 12.dp)
     )
     Spacer(Modifier.height(2.dp))
 }
