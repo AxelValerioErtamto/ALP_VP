@@ -119,7 +119,7 @@ fun Lapangan() {
                     horizontalArrangement = Arrangement.End
                 ) {
                     for (i in 0 until 15) {
-                        Verti(isFilled[i])
+                        VertiLapangan(isFilled[i])
                     }
                 }
                 Spacer(Modifier.height(32.dp))
@@ -137,25 +137,25 @@ fun Lapangan() {
                     Column {
                         Row {
                             for (i in 15 until 23) {
-                                Verti(isFilled[i])
+                                VertiLapangan(isFilled[i])
                             }
                         }
                         Spacer(Modifier.height(8.dp))
                         Row {
                             for (i in 23 until 31) {
-                                Verti(isFilled[i])
+                                VertiLapangan(isFilled[i])
                             }
                         }
                         Spacer(Modifier.height(40.dp))
                         Row {
                             for (i in 31 until 39) {
-                                Verti(isFilled[i])
+                                VertiLapangan(isFilled[i])
                             }
                         }
                         Spacer(Modifier.height(8.dp))
                         Row {
                             for (i in 39 until 47) {
-                                Verti(isFilled[i])
+                                VertiLapangan(isFilled[i])
                             }
                         }
                     }
@@ -167,7 +167,7 @@ fun Lapangan() {
                     horizontalArrangement = Arrangement.End
                 ) {
                     for (i in 47 until 62) {
-                        Verti(isFilled[i])
+                        VertiLapangan(isFilled[i])
                     }
                 }
                 Spacer(Modifier.height(8.dp))
@@ -177,7 +177,7 @@ fun Lapangan() {
                     horizontalArrangement = Arrangement.End
                 ) {
                     for (i in 62 until 77) {
-                        Verti(isFilled[i])
+                        VertiLapangan(isFilled[i])
                     }
                 }
                 Spacer(Modifier.height(32.dp))
@@ -187,7 +187,7 @@ fun Lapangan() {
                     horizontalArrangement = Arrangement.End
                 ) {
                     for (i in 77 until 92) {
-                        Verti(isFilled[i])
+                        VertiLapangan(isFilled[i])
                     }
                 }
             }
@@ -208,6 +208,24 @@ fun Lapangan() {
         }
     }
 }
+
+@Composable
+fun VertiLapangan(isFilled: Boolean) {
+    Spacer(Modifier.width(2.dp))
+    Box(
+        Modifier
+            .background(
+                if (isFilled) {
+                    Color.Red
+                } else {
+                    Color.Green
+                }
+            )
+            .size(20.dp, 40.dp)
+    )
+    Spacer(Modifier.width(2.dp))
+}
+
 
 
 @Preview(showBackground = true, showSystemUi = true)
