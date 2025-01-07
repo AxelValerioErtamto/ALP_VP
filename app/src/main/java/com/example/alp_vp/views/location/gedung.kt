@@ -1,5 +1,6 @@
 package com.example.alp_vp.views.location
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,10 +31,12 @@ import com.example.alp_vp.R
 import com.example.alp_vp.views.lesson.NavigationItem
 
 @Composable
-fun Gedung() {
+fun Gedung(lantai: Int) {
     val isFilled = arrayOf(
         true, false, false, true, true, true, false, true, false, false, true, false,
-        false, true, false, false, true, true, true, false, false, true, false, true
+        false, true, false, false, true, false, false, false, true, true, false, false,
+        false, true, false, false, true, true, true, false, false, true, false, true,
+        true, true, true
     )
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -98,15 +102,53 @@ fun Gedung() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column {
-                    for (i in 0 until 12) {
-                        HorizGedung(isFilled[i])
+                if (lantai%2 == 0) {
+                    Column(horizontalAlignment = Alignment.End) {
+                        Column(Modifier.background(Color.Gray).size(64.dp, 40.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                            Image(painterResource(R.drawable.baseline_keyboard_double_arrow_right_24), contentDescription = null)
+                        }
+                        for (i in 0 until 18) {
+                            HorizGedung(isFilled[i])
+                        }
+                        Column(Modifier.background(Color.Gray).size(64.dp, 40.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                            Image(painterResource(R.drawable.baseline_keyboard_double_arrow_left_24), contentDescription = null)
+                        }
+                    }
+                } else {
+                    Column {
+                        for (i in 0 until 21) {
+                            HorizGedung(isFilled[i])
+                        }
                     }
                 }
-                Text("5", fontSize = 64.sp, fontWeight = FontWeight.W500)
-                Column {
-                    for (i in 12 until isFilled.size) {
-                        HorizGedung(isFilled[i])
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(painterResource(R.drawable.baseline_arrow_drop_up_24), contentDescription = null, Modifier.size(128.dp))
+                    Text("$lantai", fontSize = 80.sp, fontWeight = FontWeight.W500)
+                    Image(painterResource(R.drawable.baseline_arrow_drop_down_24), contentDescription = null, Modifier.size(128.dp))
+                }
+                if (lantai%2 == 0) {
+                    Column {
+                        for (i in 18 until 32) {
+                            HorizGedung(isFilled[i])
+                        }
+                        Column(Modifier.size(40.dp, 84.dp).background(Color.Cyan), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                            Image(painterResource(R.drawable.baseline_transfer_within_a_station_24), contentDescription = null, Modifier.size(32.dp))
+                        }
+                        for (i in 32 until 36) {
+                            HorizGedung(isFilled[i])
+                        }
+                    }
+                } else {
+                    Column {
+                        Column(Modifier.background(Color.Gray).size(64.dp, 40.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                            Image(painterResource(R.drawable.baseline_keyboard_double_arrow_right_24), contentDescription = null)
+                        }
+                        for (i in 21 until 39) {
+                            HorizGedung(isFilled[i])
+                        }
+                        Column(Modifier.background(Color.Gray).size(64.dp, 40.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                            Image(painterResource(R.drawable.baseline_keyboard_double_arrow_left_24), contentDescription = null)
+                        }
                     }
                 }
             }
@@ -140,7 +182,7 @@ fun HorizGedung(isFilled: Boolean) {
                     Color.Green
                 }
             )
-            .size(80.dp, 40.dp)
+            .size(40.dp, 20.dp)
     )
     Spacer(Modifier.height(4.dp))
 }
@@ -149,5 +191,5 @@ fun HorizGedung(isFilled: Boolean) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GedungPreview() {
-    Gedung()
+    Gedung(6)
 }
