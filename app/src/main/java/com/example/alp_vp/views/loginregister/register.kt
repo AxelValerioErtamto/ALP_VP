@@ -1,4 +1,4 @@
-package com.example.alp_vp.views
+package com.example.alp_vp.views.loginregister
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.example.alp_vp.ui.theme.ALP_VPTheme
 
 @Composable
-fun Login() {
+fun Register() {
     Column(
         Modifier
             .background(color = Color(0xffffa001))
@@ -105,17 +105,17 @@ fun Login() {
                     contentColor = Color.White
                 )
             ) {
-                Text("Login", fontSize = 18.sp, fontWeight = FontWeight.W400)
+                Text("Register", fontSize = 18.sp, fontWeight = FontWeight.W400)
             }
             Row {
                 Text(
-                    "Don't have an account? ",
+                    "Already have an account? ",
                     color = Color.Black,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W400
                 )
                 Text(
-                    "Register",
+                    "Login",
                     color = Color(0xffffa001),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W500
@@ -127,8 +127,8 @@ fun Login() {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun LoginPreview() {
+fun RegisterPreview() {
     ALP_VPTheme {
-        Login()
+        Register()
     }
 }

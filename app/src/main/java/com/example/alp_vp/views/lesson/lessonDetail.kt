@@ -1,39 +1,30 @@
-package com.example.alp_vp.views
+package com.example.alp_vp.views.lesson
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.alp_vp.R
 
 @Composable
-fun Gedung() {
-    val isFilled = arrayOf(
-        true, false, false, true, true, true, false, true, false, false, true, false,
-        false, true, false, false, true, true, true, false, false, true, false, true
-    )
+fun LessonDetail() {
     Column(modifier = Modifier.fillMaxSize()) {
+        // TopAppBar
         Column(
             modifier = Modifier
                 .background(color = Color(0xffffa001))
@@ -90,26 +81,59 @@ fun Gedung() {
                 .background(Color.White),
             contentAlignment = Alignment.TopStart
         ) {
-            Row(
+            Column(
                 Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
-                Column {
-                    for (i in 0 until 12) {
-                        HorizGedung(isFilled[i])
-                    }
+                // Row for the Back icon and title
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.Black,
+                        modifier = Modifier.size(32.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Cara Parkir Paralel:",
+                        color = Color.Black,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
-                Text("5", fontSize = 64.sp, fontWeight = FontWeight.W500)
-                Column {
-                    for (i in 12 until isFilled.size) {
-                        HorizGedung(isFilled[i])
-                    }
-                }
+
+                // Image in the center with reduced horizontal padding
+                Image(
+                    painter = painterResource(id = R.drawable.paralelpark),
+                    contentDescription = "Paralel Park Image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp) // Adjust the height as needed
+                        .padding(horizontal = 16.dp) // Reduced left and right padding
+                        .padding(bottom = 16.dp),
+                    contentScale = ContentScale.Crop
+                )
+
+                // Justified text paragraph with reduced horizontal padding
+                Text(
+                    text = "This is a sample paragraph for the justified text under the image. " +
+                            "It should continue and fill the available space while maintaining justified alignment.\n\n" +
+                            "You can add more content here. The text will be wrapped and justified correctly. " +
+                            "This is an example of how to handle long text in a readable way using Jetpack Compose.",
+                    color = Color.Black,
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Justify,
+                    modifier = Modifier.padding(horizontal = 16.dp) // Reduced left and right padding
+                )
+
             }
+
         }
+
 
         // Bottom Navigation
         Row(
@@ -127,26 +151,8 @@ fun Gedung() {
     }
 }
 
-@Composable
-fun HorizGedung(isFilled: Boolean) {
-    Spacer(Modifier.height(4.dp))
-    Box(
-        Modifier
-            .background(
-                if (isFilled) {
-                    Color.Red
-                } else {
-                    Color.Green
-                }
-            )
-            .size(80.dp, 40.dp)
-    )
-    Spacer(Modifier.height(4.dp))
-}
-
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun GedungPreview() {
-    Gedung()
+fun LessonDetailPreview() {
+    LessonDetail()
 }
