@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -334,7 +335,18 @@ fun HomePage(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            NavigationItem(R.drawable.warning, "Report", iconSize = 32.dp, fontSize = 14.sp)
+            Box(
+                modifier = Modifier.clickable {
+                    navController.navigate("submitReport") // Navigate to SubmitReport page
+                }
+            ) {
+                NavigationItem(
+                    R.drawable.warning,
+                    label = "Report",
+                    iconSize = 32.dp,
+                    fontSize = 14.sp
+                )
+            }
             NavigationItem(R.drawable.car, "Location", iconSize = 32.dp, fontSize = 14.sp)
             NavigationItem(R.drawable.book, "Lesson", iconSize = 32.dp, fontSize = 14.sp)
         }
