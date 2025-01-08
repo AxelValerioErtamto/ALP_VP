@@ -55,20 +55,6 @@ class AuthenticationViewModel(
     var passwordInput by mutableStateOf("")
         private set
 
-    var confirmPasswordInput by mutableStateOf("")
-        private set
-
-    var emailInput by mutableStateOf("")
-        private set
-
-    fun changeEmailInput(emailInput: String) {
-        this.emailInput = emailInput
-    }
-
-    fun changeConfirmPasswordInput(confirmPasswordInput: String) {
-        this.confirmPasswordInput = confirmPasswordInput
-    }
-
     fun changeUsernameInput(usernameInput: String) {
         this.usernameInput = usernameInput
     }
@@ -114,7 +100,7 @@ class AuthenticationViewModel(
     }
 
     fun checkLoginForm() {
-        if (emailInput.isNotEmpty() && passwordInput.isNotEmpty()) {
+        if (usernameInput.isNotEmpty() && passwordInput.isNotEmpty()) {
             _authenticationUIState.update { currentState ->
                 currentState.copy(
                     buttonEnabled = true
@@ -130,7 +116,7 @@ class AuthenticationViewModel(
     }
 
     fun checkRegisterForm() {
-        if (emailInput.isNotEmpty() && passwordInput.isNotEmpty() && usernameInput.isNotEmpty() && confirmPasswordInput.isNotEmpty() && passwordInput == confirmPasswordInput) {
+        if (usernameInput.isNotEmpty() && passwordInput.isNotEmpty() && usernameInput.isNotEmpty()) {
             _authenticationUIState.update { currentState ->
                 currentState.copy(
                     buttonEnabled = true
@@ -215,14 +201,24 @@ class AuthenticationViewModel(
                             saveUsernameToken(res.body()!!.data.token!!, res.body()!!.data.username)
 
                             dataStatus = AuthenticationStatusUIState.Success(res.body()!!.data)
-
-                            resetViewModel()
-
-                            navController.navigate(PagesEnum.Home.name) {
-                                popUpTo(PagesEnum.Login.name) {
-                                    inclusive = true
+                            Log.d("THISNEW", "Username: $usernameInput")
+                            if(usernameInput == "admin"){
+                                navController.navigate(PagesEnum.Admin.name) {
+                                    popUpTo(PagesEnum.Admin.name) {
+                                        inclusive = true
+                                    }
                                 }
                             }
+                            else{
+                                Log.d("THISCODEISRAN", "Username: $usernameInput")
+                                navController.navigate(PagesEnum.Home.name) {
+                                    popUpTo(PagesEnum.Login.name) {
+                                        inclusive = true
+                                    }
+                                }
+                            }
+                            resetViewModel()
+
                         } else {
                             val errorMessage = Gson().fromJson(
                                 res.errorBody()!!.charStream(),
@@ -265,10 +261,8 @@ class AuthenticationViewModel(
     }
 
     fun resetViewModel() {
-        changeEmailInput("")
         changePasswordInput("")
         changeUsernameInput("")
-        changeConfirmPasswordInput("")
         _authenticationUIState.update { currentState ->
             currentState.copy(
                 showConfirmPassword = false,

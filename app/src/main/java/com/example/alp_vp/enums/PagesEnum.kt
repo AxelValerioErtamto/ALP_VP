@@ -4,6 +4,7 @@ enum class PagesEnum() {
     Login,
     Register,
     Home,
-    CreateTodo,
-    TodoDetail
+    Admin,
+    CreateLesson,
+    ManageLesson
 }

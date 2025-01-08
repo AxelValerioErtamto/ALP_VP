@@ -3,6 +3,7 @@ package com.example.alp_vp.views.loginregister
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -134,19 +135,18 @@ fun Login(
                     fontWeight = FontWeight.W400
                 )
 
-                Button(
-                    onClick = {
-                        navController.navigate(PagesEnum.Register.name)
-                    }
-                ) {
-                    Text(
-                    "Register",
+                Text(
+                    text = "Register",
                     color = Color(0xffffa001),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W500,
-                    modifier = Modifier.padding(start = 4.dp),
+                    modifier = Modifier
+                        .padding(start = 4.dp)
+                        .clickable {
+                            navController.navigate(PagesEnum.Register.name)
+                        }
+                )
 
-                    ) }
 
             }
         }
