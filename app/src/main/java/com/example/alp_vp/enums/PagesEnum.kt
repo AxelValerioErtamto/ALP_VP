@@ -6,5 +6,9 @@ enum class PagesEnum() {
     Home,
     Admin,
     CreateLesson,
-    ManageLesson
+    ManageLesson,
+    Locations,
+    Bukit,
+    Gedung,
+    Lapangan
 }

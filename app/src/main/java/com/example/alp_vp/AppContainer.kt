@@ -3,12 +3,15 @@ package com.example.alp_vp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.example.alp_vp.repositories.AuthenticationRepository
+import com.example.alp_vp.repositories.LocationRepository
 import com.example.alp_vp.repositories.NetworkAuthenticationRepository
+import com.example.alp_vp.repositories.NetworkLocationRepository
 // import com.example.alp_vp.repositories.NetworkTodoRepository
 import com.example.alp_vp.repositories.NetworkUserRepository
 // import com.example.alp_vp.repositories.TodoRepository
 import com.example.alp_vp.repositories.UserRepository
 import com.example.alp_vp.services.AuthenticationAPIService
+import com.example.alp_vp.services.LocationAPIService
 // import com.example.alp_vp.services.TodoAPIService
 import com.example.alp_vp.services.UserAPIService
 import okhttp3.OkHttpClient
@@ -19,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 interface AppContainer {
     val authenticationRepository: AuthenticationRepository
     val userRepository: UserRepository
+    val locationRepository: LocationRepository
     // val todoRepository: TodoRepository
 }
 
@@ -38,9 +42,9 @@ class DefaultAppContainer(
         retrofit.create(UserAPIService::class.java)
     }
 
-    // private val todoAPIService: TodoAPIService by lazy {
-    //     retrofit.create(TodoAPIService::class.java)
-    // }
+    private val locationAPIService: LocationAPIService by lazy {
+        retrofit.create(LocationAPIService::class.java)
+    }
 
     override val authenticationRepository: AuthenticationRepository by lazy {
         NetworkAuthenticationRepository(authenticationAPIService)
@@ -50,9 +54,9 @@ class DefaultAppContainer(
         NetworkUserRepository(userDataStore, userAPIService)
     }
 
-    // override val todoRepository: TodoRepository by lazy {
-    //     NetworkTodoRepository(todoAPIService)
-    // }
+    override val locationRepository: LocationRepository by lazy {
+        NetworkLocationRepository(locationAPIService)
+    }
 
     private fun createRetrofit(): Retrofit {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
