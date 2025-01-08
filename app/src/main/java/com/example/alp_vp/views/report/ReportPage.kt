@@ -22,9 +22,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.alp_vp.R
-import com.example.alp_vp.models.ReportModel
 import com.example.alp_vp.ui.theme.ALP_VPTheme
 import com.example.alp_vp.viewmodels.ReportViewModel
+import com.example.alp_vp.models.ReportModel
+
 
 @Composable
 fun ReportPageView(viewModel: ReportViewModel) {
