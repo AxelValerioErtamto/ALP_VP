@@ -100,95 +100,82 @@ fun Lapangan() {
         ) {
             Column(
                 Modifier
-                    .fillMaxWidth()
                     .padding(16.dp)
-            ) {
-                Column(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(80.dp)
-                        .background(Color.Gray),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text("Parkiran motor", color = Color.White, fontSize = 24.sp)
-                }
-                Spacer(Modifier.height(8.dp))
-                Row(
-                    Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    for (i in 0 until 15) {
-                        VertiLapangan(isFilled[i])
-                    }
-                }
-                Spacer(Modifier.height(32.dp))
+                    .fillMaxSize()) {
                 Row {
-                    Column(
-                        Modifier
-                            .size(140.dp, 220.dp)
-                            .background(Color.Gray),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text("Lapangan basket", color = Color.White, fontSize = 16.sp)
+                    Spacer(Modifier.width(60.dp))
+                    for (i in 0 until 14) {
+                        VertiLapangan(isFilled[i])
                     }
-                    Spacer(Modifier.width(18.dp))
+                }
+                Spacer(Modifier.height(18.dp))
+                Row {
                     Column {
-                        Row {
-                            for (i in 15 until 23) {
+                        for (i in 0 until 40) {
+                            HorizLapangan(isFilled[i])
+                        }
+                    }
+                    Spacer(Modifier.width(36.dp))
+                    Column {
+                        for (i in 0 until 40) {
+                            HorizLapangan(isFilled[i])
+                        }
+                    }
+                    Spacer(Modifier.width(8.dp))
+                    Column {
+                        for (i in 0 until 40) {
+                            HorizLapangan(isFilled[i])
+                        }
+                    }
+                    Spacer(Modifier.width(36.dp))
+                    Column {
+                        Row(Modifier.width(148.dp), horizontalArrangement = Arrangement.Center) {
+                            for (i in 0 until 7) {
                                 VertiLapangan(isFilled[i])
                             }
                         }
-                        Spacer(Modifier.height(8.dp))
-                        Row {
-                            for (i in 23 until 31) {
-                                VertiLapangan(isFilled[i])
-                            }
+                        Spacer(Modifier.height(2.dp))
+                        Column(
+                            Modifier
+                                .background(Color.Gray)
+                                .size(148.dp, 180.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text("Lapangan basket")
                         }
-                        Spacer(Modifier.height(40.dp))
+                        Spacer(Modifier.height(6.dp))
                         Row {
-                            for (i in 31 until 39) {
-                                VertiLapangan(isFilled[i])
+                            Column {
+                                for (i in 0 until 25) {
+                                    HorizLapangan(isFilled[i])
+                                }
                             }
-                        }
-                        Spacer(Modifier.height(8.dp))
-                        Row {
-                            for (i in 39 until 47) {
-                                VertiLapangan(isFilled[i])
+                            Spacer(Modifier.width(8.dp))
+                            Column {
+                                for (i in 0 until 25) {
+                                    HorizLapangan(isFilled[i])
+                                }
+                            }
+                            Spacer(Modifier.width(36.dp))
+                            Column {
+                                for (i in 0 until 25) {
+                                    HorizLapangan(isFilled[i])
+                                }
+                            }
+                            Spacer(Modifier.width(8.dp))
+                            Column {
+                                for (i in 0 until 25) {
+                                    HorizLapangan(isFilled[i])
+                                }
                             }
                         }
                     }
-                }
-                Spacer(Modifier.height(32.dp))
-                Row(
-                    Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    for (i in 47 until 62) {
-                        VertiLapangan(isFilled[i])
-                    }
-                }
-                Spacer(Modifier.height(8.dp))
-                Row(
-                    Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    for (i in 62 until 77) {
-                        VertiLapangan(isFilled[i])
-                    }
-                }
-                Spacer(Modifier.height(32.dp))
-                Row(
-                    Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    for (i in 77 until 92) {
-                        VertiLapangan(isFilled[i])
+                    Spacer(Modifier.width(36.dp))
+                    Column {
+                        for (i in 0 until 40) {
+                            HorizLapangan(isFilled[i])
+                        }
                     }
                 }
             }
@@ -222,11 +209,27 @@ fun VertiLapangan(isFilled: Boolean) {
                     Color.Green
                 }
             )
-            .size(20.dp, 40.dp)
+            .size(12.dp, 24.dp)
     )
     Spacer(Modifier.width(2.dp))
 }
 
+@Composable
+fun HorizLapangan(isFilled: Boolean) {
+    Spacer(Modifier.height(1.dp))
+    Box(
+        Modifier
+            .background(
+                if (isFilled) {
+                    Color.Red
+                } else {
+                    Color.Green
+                }
+            )
+            .size(24.dp, 12.dp)
+    )
+    Spacer(Modifier.height(1.dp))
+}
 
 
 @Preview(showBackground = true, showSystemUi = true)

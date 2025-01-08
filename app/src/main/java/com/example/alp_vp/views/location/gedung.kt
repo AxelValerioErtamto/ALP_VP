@@ -123,7 +123,7 @@ fun Gedung(lantai: Int) {
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(painterResource(R.drawable.baseline_arrow_drop_up_24), contentDescription = null, Modifier.size(128.dp))
-                    Text("$lantai", fontSize = 80.sp, fontWeight = FontWeight.W500)
+                    Text("P$lantai", fontSize = 80.sp, fontWeight = FontWeight.W500)
                     Image(painterResource(R.drawable.baseline_arrow_drop_down_24), contentDescription = null, Modifier.size(128.dp))
                 }
                 if (lantai%2 == 0) {
