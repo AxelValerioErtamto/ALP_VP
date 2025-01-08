@@ -111,8 +111,11 @@ fun ParkhubApp(
             SubmitReportView(
                 viewModel = reportViewModel,
                 userId = token.value,
-                navigateToReportPage = { navController.navigate("reportPage") } // Navigate to ReportPage after submit
+                navigateToReportPage = { navController.navigate("reportPage") },
+                navigateToHomePage = { navController.navigate(PagesEnum.Home.name) }
             )
         }
+
     }
 }
+

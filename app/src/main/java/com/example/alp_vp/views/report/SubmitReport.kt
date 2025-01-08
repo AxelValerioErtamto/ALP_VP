@@ -2,6 +2,7 @@ package com.example.alp_vp.views.report
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,15 +33,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.R
 import com.example.alp_vp.ui.theme.ALP_VPTheme
+import com.example.alp_vp.viewmodels.HomeViewModel
 import com.example.alp_vp.viewmodels.ReportViewModel
 import com.example.alp_vp.views.lesson.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun SubmitReportView(viewModel: ReportViewModel, userId: String, navigateToReportPage: () -> Unit) {
+fun SubmitReportView(viewModel: ReportViewModel, userId: String, navigateToReportPage: () -> Unit, navigateToHomePage: () -> Unit) {
     val title = remember { mutableStateOf("") }
     val description = remember { mutableStateOf("") }
     val imageUri = remember { mutableStateOf("") }
@@ -112,8 +117,15 @@ fun SubmitReportView(viewModel: ReportViewModel, userId: String, navigateToRepor
             Column() {
                 Image(
                     painter = painterResource(R.drawable.baseline_arrow_back_24),
-                    contentDescription = null,
+                    contentDescription = "Back Arrow",
+                    modifier = Modifier
+                        .clickable {
+                            // Navigate back to the HomePage
+                            navigateToHomePage()
+                        }
+                        .padding(bottom = 16.dp)
                 )
+
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                     Text(
                         text = "Report an Issue",
@@ -222,7 +234,8 @@ fun SubmitReportPreview() {
         SubmitReportView(
             viewModel = ReportViewModel(), // Provide a mock or default instance of ReportViewModel
             userId = "", // Mock user ID
-            navigateToReportPage = { /* Mock navigation action */ }
+            navigateToReportPage = { /* Mock navigation action */ },
+            navigateToHomePage = { /* Mock navigation action */ } // Add this
         )
     }
 }
