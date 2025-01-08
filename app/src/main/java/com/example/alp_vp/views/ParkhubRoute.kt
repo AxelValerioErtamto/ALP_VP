@@ -17,7 +17,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.enums.PagesEnum
 import com.example.alp_vp.viewmodels.AuthenticationViewModel
 import com.example.alp_vp.viewmodels.HomeViewModel
+import com.example.alp_vp.views.home.AdminPage
 import com.example.alp_vp.views.home.HomePage
+import com.example.alp_vp.views.lesson.AdminCreateLesson
+import com.example.alp_vp.views.lesson.AdminManageLesson
 import com.example.alp_vp.views.loginregister.Login
 import com.example.alp_vp.views.loginregister.Register
 
@@ -30,11 +33,7 @@ fun ParkhubApp(
     val localContext = LocalContext.current
     val token = homeViewModel.token.collectAsState()
 
-    NavHost(navController = navController, startDestination = if (token.value != "Unknown" && token.value != "") {
-        PagesEnum.Home.name
-    } else {
-        PagesEnum.Login.name
-    }) {
+    NavHost(navController = navController, startDestination = PagesEnum.Login.name) {
         composable(route = PagesEnum.Login.name) {
             Login(
                 modifier = Modifier
@@ -59,6 +58,42 @@ fun ParkhubApp(
 
         composable(route = PagesEnum.Home.name) {
             HomePage(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White),
+                homeViewModel = homeViewModel,
+                navController = navController,
+                token = token.value,
+                context = localContext
+            )
+        }
+
+        composable(route = PagesEnum.Admin.name) {
+            AdminPage(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White),
+                homeViewModel = homeViewModel,
+                navController = navController,
+                token = token.value,
+                context = localContext
+            )
+        }
+
+        composable(route = PagesEnum.CreateLesson.name) {
+            AdminCreateLesson(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White),
+                homeViewModel = homeViewModel,
+                navController = navController,
+                token = token.value,
+                context = localContext
+            )
+        }
+
+        composable(route = PagesEnum.ManageLesson.name) {
+            AdminManageLesson(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White),
