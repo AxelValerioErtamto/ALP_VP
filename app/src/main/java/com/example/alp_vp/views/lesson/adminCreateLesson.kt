@@ -1,5 +1,6 @@
 package com.example.alp_vp.views.lesson
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,14 +12,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.R
+import com.example.alp_vp.viewmodels.HomeViewModel
 
 @Composable
-fun AdminCreateLesson() {
+fun AdminCreateLesson(
+    modifier: Modifier = Modifier,
+    homeViewModel: HomeViewModel,
+    navController: NavHostController,
+    token: String,
+    context: Context
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         // TopAppBar
         Column(
@@ -55,7 +67,9 @@ fun AdminCreateLesson() {
                     }
                 }
                 Button(
-                    onClick = { /* Handle logout */ },
+                    onClick = {
+                        homeViewModel.logoutUser(token, navController)
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9534F)),
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.padding(4.dp)
@@ -216,5 +230,13 @@ fun AdminCreateLesson() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AdminCreateLessonPreview() {
-    AdminCreateLesson()
+    AdminCreateLesson(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
+        homeViewModel = viewModel(factory = HomeViewModel.Factory),
+        navController = rememberNavController(),
+        token = "",
+        context = LocalContext.current
+    )
 }

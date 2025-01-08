@@ -2,6 +2,7 @@ package com.example.alp_vp.views.report
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,13 +33,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.R
 import com.example.alp_vp.ui.theme.ALP_VPTheme
+import com.example.alp_vp.viewmodels.HomeViewModel
+import com.example.alp_vp.viewmodels.ReportViewModel
 import com.example.alp_vp.views.lesson.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun SubmitReportView() {
+fun SubmitReportView(viewModel: ReportViewModel, userId: String, navigateToReportPage: () -> Unit, navigateToHomePage: () -> Unit) {
+    val title = remember { mutableStateOf("") }
+    val description = remember { mutableStateOf("") }
+    val imageUri = remember { mutableStateOf("") }
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -82,7 +92,7 @@ fun SubmitReportView() {
                     }
                 }
                 Button(
-                    onClick = { /* Handle logout */ },
+                    onClick = {  },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9534F)),
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.padding(4.dp)
@@ -107,8 +117,15 @@ fun SubmitReportView() {
             Column() {
                 Image(
                     painter = painterResource(R.drawable.baseline_arrow_back_24),
-                    contentDescription = null,
+                    contentDescription = "Back Arrow",
+                    modifier = Modifier
+                        .clickable {
+                            // Navigate back to the HomePage
+                            navigateToHomePage()
+                        }
+                        .padding(bottom = 16.dp)
                 )
+
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                     Text(
                         text = "Report an Issue",
@@ -119,7 +136,6 @@ fun SubmitReportView() {
                 }
                 // Title field
                 Text("Title:", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
-                val title = remember { mutableStateOf("") }
                 TextField(
                     value = title.value,
                     onValueChange = { title.value = it },
@@ -133,7 +149,6 @@ fun SubmitReportView() {
 
                 // Description field
                 Text("Description:", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
-                val description = remember { mutableStateOf("") }
                 TextField(
                     value = description.value,
                     onValueChange = { description.value = it },
@@ -147,7 +162,6 @@ fun SubmitReportView() {
 
                 // Upload Image field
                 Text("Upload Image:", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
-                val imagePlaceholder = remember { mutableStateOf("") }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -155,8 +169,8 @@ fun SubmitReportView() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     TextField(
-                        value = imagePlaceholder.value,
-                        onValueChange = { imagePlaceholder.value = it },
+                        value = imageUri.value,
+                        onValueChange = { imageUri.value = it },
                         placeholder = { Text("Add file") },
                         modifier = Modifier
                             .weight(1f)
@@ -179,7 +193,15 @@ fun SubmitReportView() {
                 }
 
                 Button(
-                    onClick = { /* Handle submit report */ },
+                    onClick = {
+                        viewModel.addReport(
+                            userId = userId,
+                            title = title.value,
+                            description = description.value,
+                            imageUri = imageUri.value
+                        )
+                        navigateToReportPage()
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xffffa001)),
                     shape = RoundedCornerShape(8.dp)
@@ -209,6 +231,11 @@ fun SubmitReportView() {
 @Composable
 fun SubmitReportPreview() {
     ALP_VPTheme {
-        SubmitReportView()
+        SubmitReportView(
+            viewModel = ReportViewModel(), // Provide a mock or default instance of ReportViewModel
+            userId = "", // Mock user ID
+            navigateToReportPage = { /* Mock navigation action */ },
+            navigateToHomePage = { /* Mock navigation action */ } // Add this
+        )
     }
 }

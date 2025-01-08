@@ -9,6 +9,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,34 +23,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.alp_vp.R
 import com.example.alp_vp.ui.theme.ALP_VPTheme
+import com.example.alp_vp.viewmodels.ReportViewModel
+import com.example.alp_vp.models.ReportModel
 
-data class Report(
-    val userName: String,
-    val userImageRes: Int,
-    val uploadedImageRes: Int,
-    val title: String,
-    val description: String
-)
 
 @Composable
-fun ReportPageView() {
-    val reports = listOf(
-        Report(
-            userName = "John Doe",
-            R.drawable.ic_person,
-            uploadedImageRes = R.drawable.lambo,
-            title = "Parking Spot Report",
-            description = "There seems to be a blocked parking spot at Lot 5, please check."
-        ),
-        Report(
-            userName = "Jane Smith",
-            R.drawable.ic_person,
-            uploadedImageRes = R.drawable.lambo,
-            title = "Safety Concern",
-            description = "The lighting in the parking lot is inadequate. Please address this issue."
-        )
-        // Add more reports as needed
-    )
+fun ReportPageView(viewModel: ReportViewModel) {
+    val reports by viewModel.reports.collectAsState()
 
     Column(modifier = Modifier.fillMaxSize()) {
         // TopAppBar
@@ -99,12 +80,12 @@ fun ReportPageView() {
 }
 
 @Composable
-fun ReportItem(report: Report) {
+fun ReportItem(report: ReportModel) {
     Column(modifier = Modifier.padding(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            // User Icon
+            // User Icon Placeholder
             Image(
-                painter = painterResource(id = report.userImageRes),
+                painter = painterResource(id = R.drawable.ic_person),
                 contentDescription = "User Icon",
                 modifier = Modifier
                     .size(40.dp)
@@ -113,7 +94,7 @@ fun ReportItem(report: Report) {
             Spacer(modifier = Modifier.width(8.dp))
             // User Name
             Text(
-                text = report.userName,
+                text = "User ID: ${report.userId}", // Assuming userId represents the user
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -121,16 +102,18 @@ fun ReportItem(report: Report) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Uploaded Image
-        Image(
-            painter = painterResource(id = report.uploadedImageRes),
-            contentDescription = "Uploaded Image",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            contentScale = ContentScale.Crop
-        )
+        // Uploaded Image Placeholder
+        if (report.imageUri.isNotEmpty()) {
+            Image(
+                painter = painterResource(id = R.drawable.lambo), // Replace with actual logic for image loading
+                contentDescription = "Uploaded Image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
+            )
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -156,7 +139,16 @@ fun ReportItem(report: Report) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ReportPagePreview() {
+    val mockViewModel = ReportViewModel().apply {
+        addReport(
+            userId = "12345",
+            title = "Mock Report",
+            description = "This is a mock report description.",
+            imageUri = ""
+        )
+    }
+
     ALP_VPTheme {
-        ReportPageView()
+        ReportPageView(viewModel = mockViewModel)
     }
 }
