@@ -18,6 +18,7 @@ import com.example.alp_vp.enums.PagesEnum
 import com.example.alp_vp.viewmodels.AuthenticationViewModel
 import com.example.alp_vp.viewmodels.BukitViewModel
 import com.example.alp_vp.viewmodels.HomeViewModel
+import com.example.alp_vp.viewmodels.LapanganViewModel
 import com.example.alp_vp.viewmodels.ReportViewModel
 import com.example.alp_vp.views.home.AdminPage
 import com.example.alp_vp.views.home.HomePage
@@ -118,12 +119,14 @@ fun ParkhubApp(
 
         composable(route = PagesEnum.Bukit.name) {
             val bukitViewModel: BukitViewModel =
-                viewModel(factory = BukitViewModel.Factory)  // Create ViewModel
-            Bukit(viewModel = bukitViewModel) // Pass it to the Bukit composable
+                viewModel(factory = BukitViewModel.Factory)
+            Bukit(viewModel = bukitViewModel)
         }
 
         composable(route = PagesEnum.Lapangan.name) {
-            Lapangan()
+            val lapanganViewModel: LapanganViewModel =
+                viewModel(factory = LapanganViewModel.Factory)
+            Lapangan(viewModel = lapanganViewModel)
         }
 
         composable(route = PagesEnum.Gedung.name) {

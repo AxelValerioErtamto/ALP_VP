@@ -1,5 +1,6 @@
 package com.example.alp_vp.views.location
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -112,32 +114,58 @@ fun Bukit(viewModel: BukitViewModel) {
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    Row(
+                    Spacer(Modifier.height(8.dp))
+                    Box(
                         Modifier
+                            .background(Color.Gray)
                             .fillMaxWidth()
-                            .padding(8.dp),
-                        horizontalArrangement = Arrangement.End
+                            .height(24.dp),
+                        contentAlignment = Alignment.Center
                     ) {
-                        for (i in 17 downTo 0) {
-                            VertiBukit(colors[i], nama[i])
-                        }
+                        Image(
+                            painterResource(R.drawable.baseline_keyboard_double_arrow_left_24),
+                            contentDescription = null
+                        )
                     }
                     Row {
-                        Column(Modifier.padding(8.dp)) {
-                            Spacer(Modifier.height(8.dp))
-                            for (i in 18 until 36) {
-                                HorizBukit(colors[i], nama[i])
-                            }
-                        }
-                        Column(
+                        Box(
                             Modifier
-                                .fillMaxWidth()
-                                .height(400.dp)
-                                .background(Color.Gray),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
+                                .background(Color.Gray)
+                                .size(24.dp, 440.dp),
+                            contentAlignment = Alignment.Center
                         ) {
-                            Text("Bukit", color = Color.White, fontSize = 40.sp)
+                            Image(
+                                painterResource(R.drawable.baseline_keyboard_double_arrow_down_24),
+                                contentDescription = null
+                            )
+                        }
+                        Column {
+                            Spacer(Modifier.height(8.dp))
+                            Row(
+                                Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                for (i in 17 downTo 0) {
+                                    VertiBukit(colors[i], nama[i])
+                                }
+                            }
+                            Spacer(Modifier.height(8.dp))
+                            Row {
+                                Column(Modifier.padding(8.dp)) {
+                                    for (i in 18 until 36) {
+                                        HorizBukit(colors[i], nama[i])
+                                    }
+                                }
+                                Box(
+                                    Modifier
+                                        .size(300.dp, 400.dp)
+                                        .background(Color(0xff4c6444)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text("Bukit", color = Color.White, fontSize = 40.sp)
+                                }
+                            }
                         }
                     }
                 }
