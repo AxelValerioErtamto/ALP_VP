@@ -70,8 +70,8 @@ class MockLocationRepository : LocationRepository {
         val mockLocations = List(36) { index ->
             LocationModel(
                 id = index + 1,  // Unique ID for each location
-                nama = "Location ${index + 1}",
-                isFilled = index % 2 == 1 // Alternating true/false for the isFilled status
+                nama = "Bukit-${index + 1}",
+                isFilled = index % 3 == 1 // Alternating true/false for the isFilled status
             )
         }
         // Simulate successful response with the mock data

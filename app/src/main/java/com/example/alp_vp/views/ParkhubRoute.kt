@@ -1,4 +1,4 @@
-package com.example.parkhub.views
+package com.example.alp_vp.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,12 +16,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.enums.PagesEnum
 import com.example.alp_vp.viewmodels.AuthenticationViewModel
+import com.example.alp_vp.viewmodels.BukitViewModel
 import com.example.alp_vp.viewmodels.HomeViewModel
 import com.example.alp_vp.viewmodels.ReportViewModel
 import com.example.alp_vp.views.home.AdminPage
 import com.example.alp_vp.views.home.HomePage
 import com.example.alp_vp.views.lesson.AdminCreateLesson
 import com.example.alp_vp.views.lesson.AdminManageLesson
+import com.example.alp_vp.views.location.Bukit
+import com.example.alp_vp.views.location.Gedung
+import com.example.alp_vp.views.location.Lapangan
+import com.example.alp_vp.views.location.LocationPageView
 import com.example.alp_vp.views.loginregister.Login
 import com.example.alp_vp.views.loginregister.Register
 import com.example.alp_vp.views.report.SubmitReportView
@@ -31,7 +36,7 @@ fun ParkhubApp(
     navController: NavHostController = rememberNavController(),
     homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
     authenticationViewModel: AuthenticationViewModel = viewModel(factory = AuthenticationViewModel.Factory),
-    reportViewModel: ReportViewModel = viewModel(factory = ReportViewModel.Factory)
+    reportViewModel: ReportViewModel = viewModel(factory = ReportViewModel.Factory),
 ) {
     val localContext = LocalContext.current
     val token = homeViewModel.token.collectAsState()
@@ -105,6 +110,24 @@ fun ParkhubApp(
                 token = token.value,
                 context = localContext
             )
+        }
+
+        composable(route = PagesEnum.Locations.name) {
+            LocationPageView(navController)
+        }
+
+        composable(route = PagesEnum.Bukit.name) {
+            val bukitViewModel: BukitViewModel =
+                viewModel(factory = BukitViewModel.Factory)  // Create ViewModel
+            Bukit(viewModel = bukitViewModel) // Pass it to the Bukit composable
+        }
+
+        composable(route = PagesEnum.Lapangan.name) {
+            Lapangan()
+        }
+
+        composable(route = PagesEnum.Gedung.name) {
+            Gedung(6)
         }
 
         composable(route = "submitReport") {

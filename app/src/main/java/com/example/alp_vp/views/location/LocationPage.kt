@@ -2,7 +2,17 @@ package com.example.alp_vp.views.location
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -18,12 +28,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.R
 import com.example.alp_vp.ui.theme.ALP_VPTheme
 import com.example.alp_vp.views.lesson.NavigationItem
 
 @Composable
-fun LocationPageView() {
+fun LocationPageView(
+    navController: NavHostController
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             // TopAppBar
@@ -79,25 +93,26 @@ fun LocationPageView() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 16.dp).padding(top = 30.dp)
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 30.dp)
                     .weight(1f),
                 verticalArrangement = Arrangement.spacedBy(30.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Rectangle 1: Gedung
-                RectangleWithImageAndText(
-                    imageRes = R.drawable.gedung,
-                    text = "Gedung"
-                )
-                // Rectangle 2: Bukit
                 RectangleWithImageAndText(
                     imageRes = R.drawable.bukit,
-                    text = "Bukit"
+                    text = "Bukit",
+                    navController
                 )
-                // Rectangle 3: Lapangan
                 RectangleWithImageAndText(
                     imageRes = R.drawable.lapangan,
-                    text = "Lapangan"
+                    text = "Lapangan",
+                    navController
+                )
+                RectangleWithImageAndText(
+                    imageRes = R.drawable.gedung,
+                    text = "Gedung",
+                    navController
                 )
             }
         }
@@ -118,13 +133,16 @@ fun LocationPageView() {
 }
 
 @Composable
-fun RectangleWithImageAndText(imageRes: Int, text: String) {
+fun RectangleWithImageAndText(imageRes: Int, text: String, navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(160.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(Color.LightGray)
+            .clickable {
+                navController.navigate(text)
+            }
     ) {
         // Background Image
         Image(
@@ -134,7 +152,9 @@ fun RectangleWithImageAndText(imageRes: Int, text: String) {
             contentScale = ContentScale.Crop
         )
         Box(
-            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.4f))
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.4f))
         )
         // Overlay Text
         Text(
@@ -153,6 +173,6 @@ fun RectangleWithImageAndText(imageRes: Int, text: String) {
 @Composable
 fun LocationPagePreview() {
     ALP_VPTheme {
-        LocationPageView()
+        LocationPageView(rememberNavController())
     }
 }
