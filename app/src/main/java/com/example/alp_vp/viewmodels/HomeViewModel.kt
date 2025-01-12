@@ -61,6 +61,12 @@ class HomeViewModel(
         initialValue = ""
     )
 
+    val id: StateFlow<Int> = userRepository.currentUserId.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = 0
+    )
+
     fun clearDialog() {
         // _homeUIState.update { state ->
         //     state.copy(

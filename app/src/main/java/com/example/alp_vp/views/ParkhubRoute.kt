@@ -24,6 +24,7 @@ import com.example.alp_vp.views.lesson.AdminCreateLesson
 import com.example.alp_vp.views.lesson.AdminManageLesson
 import com.example.alp_vp.views.loginregister.Login
 import com.example.alp_vp.views.loginregister.Register
+import com.example.alp_vp.views.report.ReportPageView
 import com.example.alp_vp.views.report.SubmitReportView
 
 @Composable
@@ -35,6 +36,7 @@ fun ParkhubApp(
 ) {
     val localContext = LocalContext.current
     val token = homeViewModel.token.collectAsState()
+    val id = homeViewModel.id.collectAsState()
 
     NavHost(navController = navController, startDestination = PagesEnum.Login.name) {
         composable(route = PagesEnum.Login.name) {
@@ -107,15 +109,26 @@ fun ParkhubApp(
             )
         }
 
-        composable(route = "submitReport") {
+        composable(route = PagesEnum.CreateReport.name) {
             SubmitReportView(
-                viewModel = reportViewModel,
-                userId = token.value,
-                navigateToReportPage = { navController.navigate("reportPage") },
-                navigateToHomePage = { navController.navigate(PagesEnum.Home.name) }
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White),
+                reportViewModel = reportViewModel,
+                navController = navController,
+                token = token.value,
+                id = id.value,
+                context = localContext
             )
         }
 
+        composable(route = PagesEnum.ReportPage.name){
+            ReportPageView(
+                reportViewModel = reportViewModel,
+                token = token.value,
+                context = localContext
+            )
+        }
     }
 }
 

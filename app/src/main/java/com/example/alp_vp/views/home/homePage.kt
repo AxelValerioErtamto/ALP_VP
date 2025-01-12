@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.R
+import com.example.alp_vp.enums.PagesEnum
 import com.example.alp_vp.viewmodels.HomeViewModel
 import com.example.alp_vp.views.lesson.NavigationItem
 
@@ -245,16 +246,22 @@ fun HomePage(
                         .height(40.dp)
                         .clip(RoundedCornerShape(6.dp))
                         .background(Color.Gray)
+                        .clickable {
+                            navController.navigate(PagesEnum.ReportPage.name)
+                        } // Navigate on click
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.report), contentDescription = null,
+                        painter = painterResource(R.drawable.report),
+                        contentDescription = null,
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
 
-                    Box(modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(0.4f)))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.4f))
+                    )
 
                     Row(
                         modifier = Modifier.align(Alignment.Center),
@@ -273,6 +280,7 @@ fun HomePage(
                         )
                     }
                 }
+
                 Spacer(modifier = Modifier.height(35.dp))
                 Text(
                     text = "Recommended Lesson:",
@@ -337,7 +345,7 @@ fun HomePage(
         ) {
             Box(
                 modifier = Modifier.clickable {
-                    navController.navigate("submitReport") // Navigate to SubmitReport page
+                    navController.navigate(PagesEnum.CreateReport.name) // Navigate to SubmitReport page
                 }
             ) {
                 NavigationItem(

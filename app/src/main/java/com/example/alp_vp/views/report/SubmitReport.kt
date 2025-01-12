@@ -1,5 +1,8 @@
 package com.example.alp_vp.views.report
 
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +41,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.R
+import com.example.alp_vp.enums.PagesEnum
 import com.example.alp_vp.ui.theme.ALP_VPTheme
 import com.example.alp_vp.viewmodels.HomeViewModel
 import com.example.alp_vp.viewmodels.ReportViewModel
@@ -45,10 +50,14 @@ import com.example.alp_vp.views.lesson.NavigationItem
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun SubmitReportView(viewModel: ReportViewModel, userId: String, navigateToReportPage: () -> Unit, navigateToHomePage: () -> Unit) {
-    val title = remember { mutableStateOf("") }
-    val description = remember { mutableStateOf("") }
-    val imageUri = remember { mutableStateOf("") }
+fun SubmitReportView(
+    modifier: Modifier = Modifier,
+    reportViewModel: ReportViewModel,
+    navController: NavHostController,
+    token: String,
+    id: Int,
+    context: Context
+) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -121,7 +130,7 @@ fun SubmitReportView(viewModel: ReportViewModel, userId: String, navigateToRepor
                     modifier = Modifier
                         .clickable {
                             // Navigate back to the HomePage
-                            navigateToHomePage()
+                            navController.navigate(PagesEnum.Home.name)
                         }
                         .padding(bottom = 16.dp)
                 )
@@ -137,8 +146,8 @@ fun SubmitReportView(viewModel: ReportViewModel, userId: String, navigateToRepor
                 // Title field
                 Text("Title:", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
                 TextField(
-                    value = title.value,
-                    onValueChange = { title.value = it },
+                    value = reportViewModel.report_title_input,
+                    onValueChange = { reportViewModel.setTitle(it)},
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
@@ -150,8 +159,8 @@ fun SubmitReportView(viewModel: ReportViewModel, userId: String, navigateToRepor
                 // Description field
                 Text("Description:", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
                 TextField(
-                    value = description.value,
-                    onValueChange = { description.value = it },
+                    value = reportViewModel.report_description_input,
+                    onValueChange = {reportViewModel.setDescription(it)},
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
@@ -160,47 +169,43 @@ fun SubmitReportView(viewModel: ReportViewModel, userId: String, navigateToRepor
                     )
                 )
 
-                // Upload Image field
-                Text("Upload Image:", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    TextField(
-                        value = imageUri.value,
-                        onValueChange = { imageUri.value = it },
-                        placeholder = { Text("Add file") },
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 8.dp),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Color(0xFFF8F9FA)
-                        )
-                    )
-                    Button(
-                        onClick = { /* Handle file upload */ },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xffffa001)),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("Upload", color = Color.White)
-                            Spacer(modifier = Modifier.width(2.dp))
-                            Image(painter = painterResource(R.drawable.baseline_upload_24), contentDescription = null, colorFilter = ColorFilter.tint(Color.White))
-                        }
-                    }
-                }
+//                // Upload Image field
+//                Text("Upload Image:", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
+//                Row(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(bottom = 16.dp),
+//                    verticalAlignment = Alignment.CenterVertically
+//                ) {
+//                    TextField(
+//                        value = reportViewModel.report_image_input,
+//                        onValueChange = {reportViewModel.setImage(it)},
+//                        placeholder = { Text("Add file") },
+//                        modifier = Modifier
+//                            .weight(1f)
+//                            .padding(end = 8.dp),
+//                        colors = TextFieldDefaults.textFieldColors(
+//                            containerColor = Color(0xFFF8F9FA)
+//                        )
+//                    )
+//                    Button(
+//                        onClick = { /* Handle file upload */ },
+//                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xffffa001)),
+//                        shape = RoundedCornerShape(8.dp)
+//                    ) {
+//                        Row(verticalAlignment = Alignment.CenterVertically) {
+//                            Text("Upload", color = Color.White)
+//                            Spacer(modifier = Modifier.width(2.dp))
+//                            Image(painter = painterResource(R.drawable.baseline_upload_24), contentDescription = null, colorFilter = ColorFilter.tint(Color.White))
+//                        }
+//                    }
+//                }
+                Log.d("id", "id:${id}")
 
                 Button(
                     onClick = {
-                        viewModel.addReport(
-                            userId = userId,
-                            title = title.value,
-                            description = description.value,
-                            imageUri = imageUri.value
-                        )
-                        navigateToReportPage()
+                            reportViewModel.createReport(token, id, navController)
+
                     },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xffffa001)),
@@ -208,6 +213,7 @@ fun SubmitReportView(viewModel: ReportViewModel, userId: String, navigateToRepor
                 ) {
                     Text("Submit Report", color = Color.White)
                 }
+
             }
         }
         Row(
@@ -232,10 +238,14 @@ fun SubmitReportView(viewModel: ReportViewModel, userId: String, navigateToRepor
 fun SubmitReportPreview() {
     ALP_VPTheme {
         SubmitReportView(
-            viewModel = ReportViewModel(), // Provide a mock or default instance of ReportViewModel
-            userId = "", // Mock user ID
-            navigateToReportPage = { /* Mock navigation action */ },
-            navigateToHomePage = { /* Mock navigation action */ } // Add this
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White),
+            reportViewModel = viewModel(factory = ReportViewModel.Factory),
+            navController = rememberNavController(),
+            token = "",
+            id = 0,
+            context = LocalContext.current
         )
     }
 }

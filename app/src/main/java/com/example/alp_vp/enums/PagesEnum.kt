@@ -6,5 +6,7 @@ enum class PagesEnum() {
     Home,
     Admin,
     CreateLesson,
-    ManageLesson
+    ManageLesson,
+    CreateReport,
+    ReportPage,
 }
