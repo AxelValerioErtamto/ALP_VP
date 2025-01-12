@@ -1,5 +1,6 @@
 package com.example.alp_vp.views.location
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,23 +19,29 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.alp_vp.R
 import com.example.alp_vp.repositories.MockLocationRepository
+import com.example.alp_vp.repositories.MockUserRepository
 import com.example.alp_vp.uistates.LocationUIState
-import com.example.alp_vp.viewmodel.LocationViewModel
+import com.example.alp_vp.viewmodels.BukitViewModel
 import com.example.alp_vp.views.lesson.NavigationItem
 
 @Composable
-fun Bukit(viewModel: LocationViewModel) {
+fun Bukit(viewModel: BukitViewModel) {
     val locationUIState = viewModel.locationUIState
+    LaunchedEffect(Unit) {
+        viewModel.getAllBukits()
+    }
     if (locationUIState is LocationUIState.Loading) {
         CircularProgressIndicator()
     }
@@ -42,7 +49,8 @@ fun Bukit(viewModel: LocationViewModel) {
         Text("Error: ${locationUIState.errorMessage}")
     }
     if (locationUIState is LocationUIState.Success) {
-        val isFilled = locationUIState.locations.map { it.isFilled }
+        val colors = viewModel.getBukitColors()
+        val nama = viewModel.getBukitNama()
 
         Column(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -106,31 +114,58 @@ fun Bukit(viewModel: LocationViewModel) {
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    Row(
+                    Spacer(Modifier.height(8.dp))
+                    Box(
                         Modifier
+                            .background(Color.Gray)
                             .fillMaxWidth()
-                            .padding(8.dp),
-                        horizontalArrangement = Arrangement.End
+                            .height(24.dp),
+                        contentAlignment = Alignment.Center
                     ) {
-                        for (i in 0 until 18) {
-                            VertiBukit(isFilled[i])
-                        }
+                        Image(
+                            painterResource(R.drawable.baseline_keyboard_double_arrow_left_24),
+                            contentDescription = null
+                        )
                     }
                     Row {
-                        Column(Modifier.padding(8.dp)) {
-                            for (i in 14 until isFilled.size) {
-                                HorizBukit(isFilled[i])
-                            }
-                        }
-                        Column(
+                        Box(
                             Modifier
-                                .fillMaxWidth()
-                                .height(400.dp)
-                                .background(Color.Gray),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
+                                .background(Color.Gray)
+                                .size(24.dp, 440.dp),
+                            contentAlignment = Alignment.Center
                         ) {
-                            Text("Bukit", color = Color.White, fontSize = 40.sp)
+                            Image(
+                                painterResource(R.drawable.baseline_keyboard_double_arrow_down_24),
+                                contentDescription = null
+                            )
+                        }
+                        Column {
+                            Spacer(Modifier.height(8.dp))
+                            Row(
+                                Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                for (i in 17 downTo 0) {
+                                    VertiBukit(colors[i], nama[i])
+                                }
+                            }
+                            Spacer(Modifier.height(8.dp))
+                            Row {
+                                Column(Modifier.padding(8.dp)) {
+                                    for (i in 18 until 36) {
+                                        HorizBukit(colors[i], nama[i])
+                                    }
+                                }
+                                Box(
+                                    Modifier
+                                        .size(300.dp, 400.dp)
+                                        .background(Color(0xff4c6444)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text("Bukit", color = Color.White, fontSize = 40.sp)
+                                }
+                            }
                         }
                     }
                 }
@@ -154,36 +189,28 @@ fun Bukit(viewModel: LocationViewModel) {
 }
 
 @Composable
-fun VertiBukit(isFilled: Boolean) {
+fun VertiBukit(color: Color, num: String) {
     Spacer(Modifier.width(2.dp))
     Box(
         Modifier
-            .background(
-                if (isFilled) {
-                    Color.Red
-                } else {
-                    Color.Green
-                }
-            )
+            .background(color)
             .size(12.dp, 24.dp)
-    )
+    ) {
+        Text(num, fontSize = 4.sp)
+    }
     Spacer(Modifier.width(2.dp))
 }
 
 @Composable
-fun HorizBukit(isFilled: Boolean) {
+fun HorizBukit(color: Color, num: String) {
     Spacer(Modifier.height(2.dp))
     Box(
         Modifier
-            .background(
-                if (isFilled) {
-                    Color.Red
-                } else {
-                    Color.Green
-                }
-            )
+            .background(color)
             .size(24.dp, 12.dp)
-    )
+    ) {
+        Text(num, fontSize = 4.sp)
+    }
     Spacer(Modifier.height(2.dp))
 }
 
@@ -192,7 +219,8 @@ fun HorizBukit(isFilled: Boolean) {
 @Composable
 fun BukitPreview() {
     // Use LocationRepositoryMock instead of the actual LocationRepository
-    val viewModel = LocationViewModel(MockLocationRepository())  // Inject mock repository
-    viewModel.getAllLocations("mock-token")  // Trigger data loading
+    val viewModel =
+        BukitViewModel(MockLocationRepository(), MockUserRepository())  // Inject mock repository
+    viewModel.getAllBukits()  // Trigger data loading
     Bukit(viewModel = viewModel)
 }

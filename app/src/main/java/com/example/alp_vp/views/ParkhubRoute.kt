@@ -1,4 +1,4 @@
-package com.example.parkhub.views
+package com.example.alp_vp.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,13 +16,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.enums.PagesEnum
 import com.example.alp_vp.viewmodels.AuthenticationViewModel
+import com.example.alp_vp.viewmodels.BukitViewModel
 import com.example.alp_vp.viewmodels.HomeViewModel
+import com.example.alp_vp.viewmodels.LapanganViewModel
 import com.example.alp_vp.viewmodels.ReportViewModel
 import com.example.alp_vp.viewmodels.AdminCreateLessonViewModel
 import com.example.alp_vp.views.home.AdminPage
 import com.example.alp_vp.views.home.HomePage
 import com.example.alp_vp.views.lesson.AdminCreateLesson
 import com.example.alp_vp.views.lesson.AdminManageLesson
+import com.example.alp_vp.views.location.Bukit
+import com.example.alp_vp.views.location.Gedung
+import com.example.alp_vp.views.location.Lapangan
+import com.example.alp_vp.views.location.LocationPageView
 import com.example.alp_vp.views.loginregister.Login
 import com.example.alp_vp.views.loginregister.Register
 import com.example.alp_vp.views.report.SubmitReportView
@@ -109,6 +115,26 @@ fun ParkhubApp(
             )
         }
 
+        composable(route = PagesEnum.Locations.name) {
+            LocationPageView(navController)
+        }
+
+        composable(route = PagesEnum.Bukit.name) {
+            val bukitViewModel: BukitViewModel =
+                viewModel(factory = BukitViewModel.Factory)
+            Bukit(viewModel = bukitViewModel)
+        }
+
+        composable(route = PagesEnum.Lapangan.name) {
+            val lapanganViewModel: LapanganViewModel =
+                viewModel(factory = LapanganViewModel.Factory)
+            Lapangan(viewModel = lapanganViewModel)
+        }
+
+        composable(route = PagesEnum.Gedung.name) {
+            Gedung(6)
+        }
+
         composable(route = "submitReport") {
             SubmitReportView(
                 viewModel = reportViewModel,
@@ -120,3 +146,4 @@ fun ParkhubApp(
 
     }
 }
+

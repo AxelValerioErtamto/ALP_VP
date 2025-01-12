@@ -8,7 +8,9 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.alp_vp.models.GeneralResponseModel
 import com.example.alp_vp.services.UserAPIService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import okio.Timeout
 import retrofit2.Call
 
 interface UserRepository {
@@ -53,5 +55,55 @@ class NetworkUserRepository(
 
     override fun logout(token: String): Call<GeneralResponseModel> {
         return userAPIService.logout(token)
+    }
+}
+
+class MockUserRepository : UserRepository {
+    private var mockUserToken: String = "mockToken"
+    private var mockUsername: String = "mockUsername"
+
+    // Mocking currentUserToken as a Flow
+    override val currentUserToken: Flow<String> = flow {
+        emit(mockUserToken)  // Simulate emitting a mock user token
+    }
+
+    // Mocking currentUsername as a Flow
+    override val currentUsername: Flow<String> = flow {
+        emit(mockUsername)  // Simulate emitting a mock username
+    }
+
+    // Mocking saveUserToken (no-op)
+    override suspend fun saveUserToken(token: String) {
+        mockUserToken = token  // Simulate saving the user token
+    }
+
+    // Mocking saveUsername (no-op)
+    override suspend fun saveUsername(username: String) {
+        mockUsername = username  // Simulate saving the username
+    }
+
+    // Mocking the logout function, assuming a successful logout with a mock response
+    override fun logout(token: String): Call<GeneralResponseModel> {
+        // Mock response for successful logout
+        val mockResponse = GeneralResponseModel("Logged out successfully")
+        return object : Call<GeneralResponseModel> {
+            override fun enqueue(callback: retrofit2.Callback<GeneralResponseModel>) {
+                callback.onResponse(this, retrofit2.Response.success(mockResponse)) // Simulate success
+            }
+
+            override fun isExecuted(): Boolean = false
+            override fun clone(): Call<GeneralResponseModel> = this
+            override fun execute(): retrofit2.Response<GeneralResponseModel> {
+                return retrofit2.Response.success(mockResponse)
+            }
+
+            override fun cancel() {}
+            override fun isCanceled(): Boolean = false
+            override fun request(): okhttp3.Request = okhttp3.Request.Builder().url("http://example.com").build()
+
+            override fun timeout(): Timeout {
+                return Timeout.NONE  // Returning a default timeout, you can adjust as necessary
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ import com.example.alp_vp.repositories.UserRepository
 import com.example.alp_vp.uistates.LocationUIState
 import kotlinx.coroutines.launch
 
-class BukitViewModel(
+class LapanganViewModel(
     private val locationRepository: LocationRepository,
     private val userRepository: UserRepository
 ) : ViewModel() {
@@ -22,23 +22,23 @@ class BukitViewModel(
     var locationUIState: LocationUIState = LocationUIState.Start
         private set
 
-    // Function to fetch all locations
-    fun getAllBukits() {
+    // Function to fetch all Lapangans
+    fun getAllLapangans() {
         viewModelScope.launch {
             // Retrieve the token from UserRepository
             userRepository.currentUserToken.collect { token ->
                 locationUIState = LocationUIState.Loading
                 locationRepository.getAllLocations(token,
                     onResult = { locations ->
-                        // Filter locations to only include "Bukit-" locations
-                        val bukits = locations?.filter { location ->
-                            location.nama.startsWith("Bukit-")
+                        // Filter locations to only include "Lapangan-" locations
+                        val lapangans = locations?.filter { location ->
+                            location.nama.startsWith("Lapangan-")
                         }
 
                         // Process the locations:
-                        val bukitsWithModifiedNama = bukits?.map { location ->
-                            // Extract the numerical part from "Bukit-<number>"
-                            val newNama = location.nama.substringAfter("Bukit-").toIntOrNull()
+                        val lapangansWithModifiedNama = lapangans?.map { location ->
+                            // Extract the numerical part from "Lapangan-<number>"
+                            val newNama = location.nama.substringAfter("Lapangan-").toIntOrNull()
 
                             // Create a new LocationModel with modified name and reordered id
                             newNama?.let {
@@ -50,7 +50,7 @@ class BukitViewModel(
                             }
                         }
                         // Sort by the numeric value of 'nama', then filter out nulls
-                        val sortedBukits = bukitsWithModifiedNama
+                        val sortedLapangans = lapangansWithModifiedNama
                             ?.sortedBy { it?.nama?.toIntOrNull() ?: Int.MAX_VALUE }
                             ?.mapIndexed { index, location ->
                                 // Assign new IDs after sorting
@@ -58,10 +58,10 @@ class BukitViewModel(
                             }
                             ?.filterNotNull()  // Remove any null values if any
 
-                        locationUIState = if (sortedBukits.isNullOrEmpty()) {
-                            LocationUIState.Failed("No Bukit locations found")
+                        locationUIState = if (sortedLapangans.isNullOrEmpty()) {
+                            LocationUIState.Failed("No Lapangan locations found")
                         } else {
-                            LocationUIState.Success(sortedBukits) // No null values here
+                            LocationUIState.Success(sortedLapangans) // No null values here
                         }
                     },
                     onError = { error ->
@@ -72,7 +72,7 @@ class BukitViewModel(
         }
     }
 
-    fun getBukitColors(): List<Color> {
+    fun getLapanganColors(): List<Color> {
         return (locationUIState as? LocationUIState.Success)?.locations?.map { location ->
             if (location.isFilled) {
                 Color.Red
@@ -82,22 +82,14 @@ class BukitViewModel(
         } ?: emptyList()
     }
 
-    fun getBukitNama(): List<String> {
-        return (locationUIState as? LocationUIState.Success)?.locations?.map { location ->
-            location.nama
-        } ?: emptyList()
-    }
-
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as ParkhubApplication)
                 val locationRepository = application.container.locationRepository
                 val userRepository = application.container.userRepository
-                BukitViewModel(locationRepository, userRepository)  // Injecting LocationRepository
+                LapanganViewModel(locationRepository, userRepository)  // Injecting LocationRepository
             }
         }
     }
 }
-
-
