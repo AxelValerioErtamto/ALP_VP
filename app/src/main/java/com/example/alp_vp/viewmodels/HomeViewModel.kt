@@ -39,47 +39,16 @@ import java.io.IOException
 
 class HomeViewModel(
     private val userRepository: UserRepository,
-    // private val todoRepository: TodoRepository
 ) : ViewModel() {
-    // private val _homeUIState = MutableStateFlow(HomeUIState())
 
     var logoutStatus: StringDataStatusUIState by mutableStateOf(StringDataStatusUIState.Start)
         private set
-
-    // var dataStatus: TodoDataStatusUIState by mutableStateOf(TodoDataStatusUIState.Start)
-    //     private set
-
-    val username: StateFlow<String> = userRepository.currentUsername.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = ""
-    )
 
     val token: StateFlow<String> = userRepository.currentUserToken.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = ""
     )
-
-    fun clearDialog() {
-        // _homeUIState.update { state ->
-        //     state.copy(
-        //         showDialog = false
-        //     )
-        // }
-    }
-
-    fun changePriorityTextBackgroundColor(
-        priority: PrioritiesEnum
-    ): Color {
-        if (priority == PrioritiesEnum.High) {
-            return Color.Red
-        } else if (priority == PrioritiesEnum.Medium) {
-            return Color.Yellow
-        }
-
-        return Color.Green
-    }
 
     fun logoutUser(token: String, navController: NavHostController) {
         viewModelScope.launch {
@@ -124,41 +93,6 @@ class HomeViewModel(
         }
     }
 
-    // fun getAllTodos(token: String) {
-    //     viewModelScope.launch {
-    //         Log.d("token-home", "TOKEN AT HOME: ${token}")
-
-    //         dataStatus = TodoDataStatusUIState.Loading
-
-    //         try {
-    //             val call = todoRepository.getAllTodos(token)
-    //             call.enqueue(object : Callback<GetAllTodoResponse> {
-    //                 override fun onResponse(call: Call<GetAllTodoResponse>, res: Response<GetAllTodoResponse>) {
-    //                     if (res.isSuccessful) {
-    //                         dataStatus = TodoDataStatusUIState.Success(res.body()!!.data)
-
-    //                         Log.d("data-result", "TODO LIST DATA: ${dataStatus}")
-    //                     } else {
-    //                         val errorMessage = Gson().fromJson(
-    //                             res.errorBody()!!.charStream(),
-    //                             ErrorModel::class.java
-    //                         )
-
-    //                         dataStatus = TodoDataStatusUIState.Failed(errorMessage.errors)
-    //                     }
-    //                 }
-
-    //                 override fun onFailure(call: Call<GetAllTodoResponse>, t: Throwable) {
-    //                     dataStatus = TodoDataStatusUIState.Failed(t.localizedMessage)
-    //                 }
-
-    //             })
-    //         } catch (error: IOException) {
-    //             dataStatus = TodoDataStatusUIState.Failed(error.localizedMessage)
-    //         }
-    //     }
-    // }
-
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
@@ -170,16 +104,6 @@ class HomeViewModel(
         }
     }
 
-    fun convertStringToEnum(text: String): PrioritiesEnum {
-        if (text == "High") {
-            return PrioritiesEnum.High
-        } else if (text == "Medium") {
-            return PrioritiesEnum.Medium
-        } else {
-            return PrioritiesEnum.Low
-        }
-    }
-
     fun saveUsernameToken(token: String, username: String) {
         viewModelScope.launch {
             userRepository.saveUserToken(token)
@@ -187,11 +111,4 @@ class HomeViewModel(
         }
     }
 
-    fun clearLogoutErrorMessage() {
-        logoutStatus = StringDataStatusUIState.Start
-    }
-
-    // fun clearDataErrorMessage() {
-    //     dataStatus = TodoDataStatusUIState.Start
-    // }
 }

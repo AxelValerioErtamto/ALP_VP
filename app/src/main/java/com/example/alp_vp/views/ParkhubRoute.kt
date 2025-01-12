@@ -18,6 +18,7 @@ import com.example.alp_vp.enums.PagesEnum
 import com.example.alp_vp.viewmodels.AuthenticationViewModel
 import com.example.alp_vp.viewmodels.HomeViewModel
 import com.example.alp_vp.viewmodels.ReportViewModel
+import com.example.alp_vp.viewmodels.AdminCreateLessonViewModel
 import com.example.alp_vp.views.home.AdminPage
 import com.example.alp_vp.views.home.HomePage
 import com.example.alp_vp.views.lesson.AdminCreateLesson
@@ -31,7 +32,8 @@ fun ParkhubApp(
     navController: NavHostController = rememberNavController(),
     homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
     authenticationViewModel: AuthenticationViewModel = viewModel(factory = AuthenticationViewModel.Factory),
-    reportViewModel: ReportViewModel = viewModel(factory = ReportViewModel.Factory)
+    reportViewModel: ReportViewModel = viewModel(factory = ReportViewModel.Factory),
+    adminCreateLessonViewModel: AdminCreateLessonViewModel = viewModel(factory = AdminCreateLessonViewModel.Factory)
 ) {
     val localContext = LocalContext.current
     val token = homeViewModel.token.collectAsState()
@@ -88,10 +90,10 @@ fun ParkhubApp(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White),
-                homeViewModel = homeViewModel,
                 navController = navController,
                 token = token.value,
-                context = localContext
+                context = localContext,
+                adminCreateLessonViewModel = adminCreateLessonViewModel // Pass ViewModel here
             )
         }
 
@@ -118,4 +120,3 @@ fun ParkhubApp(
 
     }
 }
-

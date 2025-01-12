@@ -3,14 +3,17 @@ package com.example.alp_vp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.example.alp_vp.repositories.AuthenticationRepository
+import com.example.alp_vp.repositories.LessonRepository
 import com.example.alp_vp.repositories.LocationRepository
 import com.example.alp_vp.repositories.NetworkAuthenticationRepository
+import com.example.alp_vp.repositories.NetworkLessonRepository
 import com.example.alp_vp.repositories.NetworkLocationRepository
 // import com.example.alp_vp.repositories.NetworkTodoRepository
 import com.example.alp_vp.repositories.NetworkUserRepository
 // import com.example.alp_vp.repositories.TodoRepository
 import com.example.alp_vp.repositories.UserRepository
 import com.example.alp_vp.services.AuthenticationAPIService
+import com.example.alp_vp.services.LessonAPIService
 import com.example.alp_vp.services.LocationAPIService
 // import com.example.alp_vp.services.TodoAPIService
 import com.example.alp_vp.services.UserAPIService
@@ -23,7 +26,7 @@ interface AppContainer {
     val authenticationRepository: AuthenticationRepository
     val userRepository: UserRepository
     val locationRepository: LocationRepository
-    // val todoRepository: TodoRepository
+    val lessonRepository: LessonRepository
 }
 
 class DefaultAppContainer(
@@ -31,7 +34,7 @@ class DefaultAppContainer(
 ) : AppContainer {
 //    private val baseUrl = "http://192.168.18.252:3000/"
 //    private val baseUrl = "http://192.168.232.233:3000/"
-    private val baseUrl = "http://192.168.232.70:3000"
+    private val baseUrl = "http://192.168.56.1:3000"
     private val retrofit: Retrofit by lazy { createRetrofit() }
 
     private val authenticationAPIService: AuthenticationAPIService by lazy {
@@ -46,6 +49,10 @@ class DefaultAppContainer(
         retrofit.create(LocationAPIService::class.java)
     }
 
+    private val lessonAPIService: LessonAPIService by lazy {
+        retrofit.create(LessonAPIService::class.java)
+    }
+
     override val authenticationRepository: AuthenticationRepository by lazy {
         NetworkAuthenticationRepository(authenticationAPIService)
     }
@@ -56,6 +63,10 @@ class DefaultAppContainer(
 
     override val locationRepository: LocationRepository by lazy {
         NetworkLocationRepository(locationAPIService)
+    }
+
+    override val lessonRepository: LessonRepository by lazy {
+        NetworkLessonRepository(lessonAPIService)
     }
 
     private fun createRetrofit(): Retrofit {
