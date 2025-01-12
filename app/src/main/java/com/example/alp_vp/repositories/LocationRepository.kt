@@ -74,15 +74,33 @@ class MockLocationRepository : LocationRepository {
 //            )
 //        }
 
-        val mockLapangan = List(281) { index ->
-            LocationModel(
-                id = index + 1,  // Unique ID for each location
-                nama = "Lapangan-${index + 1}",
-                isFilled = index % 3 == 1 // Alternating true/false for the isFilled status
-            )
+//        val mockLapangan = List(281) { index ->
+//            LocationModel(
+//                id = index + 1,  // Unique ID for each location
+//                nama = "Lapangan-${index + 1}",
+//                isFilled = index % 3 == 1 // Alternating true/false for the isFilled status
+//            )
+//        }
+
+        val mutableMockGedung = mutableListOf<LocationModel>()
+        var idCounter = 1
+        for (floor in 3..14) {
+            val spots = if (floor % 2 == 0) 36 else 39
+            for (spot in 1..spots) {
+                mutableMockGedung.add(
+                    LocationModel(
+                        id = idCounter++,
+                        nama = "Gedung-$floor-$spot",
+                        isFilled = (spot + floor) % 3 == 1 // Alternating true/false based on floor and spot
+                    )
+                )
+            }
         }
+
+        val mockGedung: List<LocationModel> = mutableMockGedung.toList()
+
         // Simulate successful response with the mock data
-        onResult(mockLapangan)
+        onResult(mockGedung)
     }
 
     override fun updateLocation(

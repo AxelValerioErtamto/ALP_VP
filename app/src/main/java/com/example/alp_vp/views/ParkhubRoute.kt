@@ -21,6 +21,7 @@ import com.example.alp_vp.viewmodels.HomeViewModel
 import com.example.alp_vp.viewmodels.LapanganViewModel
 import com.example.alp_vp.viewmodels.ReportViewModel
 import com.example.alp_vp.viewmodels.AdminCreateLessonViewModel
+import com.example.alp_vp.viewmodels.GedungViewModel
 import com.example.alp_vp.views.home.AdminPage
 import com.example.alp_vp.views.home.HomePage
 import com.example.alp_vp.views.lesson.AdminCreateLesson
@@ -132,7 +133,9 @@ fun ParkhubApp(
         }
 
         composable(route = PagesEnum.Gedung.name) {
-            Gedung(6)
+            val gedungViewModel: GedungViewModel =
+                viewModel(factory = GedungViewModel.Factory)
+            Gedung(viewModel = gedungViewModel)
         }
 
         composable(route = "submitReport") {
