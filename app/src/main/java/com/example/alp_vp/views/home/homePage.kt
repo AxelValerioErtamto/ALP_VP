@@ -29,6 +29,7 @@ import com.example.alp_vp.R
 import com.example.alp_vp.enums.PagesEnum
 import com.example.alp_vp.views.templates.BotAppBar
 import com.example.alp_vp.viewmodels.HomeViewModel
+import com.example.alp_vp.views.lesson.NavigationItem
 
 @Composable
 fun HomePage(
