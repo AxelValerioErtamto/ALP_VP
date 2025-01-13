@@ -113,42 +113,6 @@ class AdminUpdateLessonViewModel(
         }
     }
 
-
-
-//
-//    fun updateLesson(
-//        token: String,
-//        lessonId: Int,
-//        title: String,
-//        description: String,
-//        content: String,
-//        onSuccess: () -> Unit,
-//        onError: (String) -> Unit
-//    ) {
-//        _isLoading.value = true
-//
-//        lessonRepository.updateLesson(token, lessonId, title, description, content)
-//            .enqueue(object : Callback<GeneralResponseModel> {
-//                override fun onResponse(
-//                    call: Call<GeneralResponseModel>,
-//                    response: Response<GeneralResponseModel>
-//                ) {
-//                    _isLoading.value = false
-//                    if (response.isSuccessful) {
-//                        onSuccess()
-//                    } else {
-//                        onError("Failed to update lesson: ${response.message()}")
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<GeneralResponseModel>, t: Throwable) {
-//                    _isLoading.value = false
-//                    onError("Failed to update lesson: ${t.message}")
-//                }
-//            })
-//    }
-
-
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

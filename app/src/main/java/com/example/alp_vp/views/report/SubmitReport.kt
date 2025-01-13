@@ -169,37 +169,6 @@ fun SubmitReportView(
                     )
                 )
 
-//                // Upload Image field
-//                Text("Upload Image:", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
-//                Row(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(bottom = 16.dp),
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    TextField(
-//                        value = reportViewModel.report_image_input,
-//                        onValueChange = {reportViewModel.setImage(it)},
-//                        placeholder = { Text("Add file") },
-//                        modifier = Modifier
-//                            .weight(1f)
-//                            .padding(end = 8.dp),
-//                        colors = TextFieldDefaults.textFieldColors(
-//                            containerColor = Color(0xFFF8F9FA)
-//                        )
-//                    )
-//                    Button(
-//                        onClick = { /* Handle file upload */ },
-//                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xffffa001)),
-//                        shape = RoundedCornerShape(8.dp)
-//                    ) {
-//                        Row(verticalAlignment = Alignment.CenterVertically) {
-//                            Text("Upload", color = Color.White)
-//                            Spacer(modifier = Modifier.width(2.dp))
-//                            Image(painter = painterResource(R.drawable.baseline_upload_24), contentDescription = null, colorFilter = ColorFilter.tint(Color.White))
-//                        }
-//                    }
-//                }
                 Log.d("id", "id:${id}")
 
                 Button(
