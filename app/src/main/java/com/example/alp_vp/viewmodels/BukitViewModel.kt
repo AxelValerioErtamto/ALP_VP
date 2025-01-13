@@ -96,8 +96,6 @@ class BukitViewModel(
                 val userRepository = application.container.userRepository
                 BukitViewModel(locationRepository, userRepository)  // Injecting LocationRepository
             }
+            }
         }
-    }
 }
-
-

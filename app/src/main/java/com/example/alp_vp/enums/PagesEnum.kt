@@ -1,3 +1,4 @@
+
 package com.example.alp_vp.enums
 
 enum class PagesEnum() {
@@ -13,5 +14,7 @@ enum class PagesEnum() {
     Locations,
     Bukit,
     Gedung,
-    Lapangan
+    Lapangan,
+    CreateReport,
+    ReportPage,
 }

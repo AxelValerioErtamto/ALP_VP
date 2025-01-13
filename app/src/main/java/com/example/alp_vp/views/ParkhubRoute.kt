@@ -21,6 +21,7 @@ import com.example.alp_vp.viewmodels.HomeViewModel
 import com.example.alp_vp.viewmodels.LapanganViewModel
 import com.example.alp_vp.viewmodels.ReportViewModel
 import com.example.alp_vp.viewmodels.AdminCreateLessonViewModel
+import com.example.alp_vp.viewmodels.GedungViewModel
 import com.example.alp_vp.viewmodels.AdminUpdateLessonViewModel
 import com.example.alp_vp.viewmodels.lesson.LessonViewModel
 import com.example.alp_vp.views.home.AdminPage
@@ -36,6 +37,7 @@ import com.example.alp_vp.views.location.Lapangan
 import com.example.alp_vp.views.location.LocationPageView
 import com.example.alp_vp.views.loginregister.Login
 import com.example.alp_vp.views.loginregister.Register
+import com.example.alp_vp.views.report.ReportPageView
 import com.example.alp_vp.views.report.SubmitReportView
 
 @Composable
@@ -46,10 +48,14 @@ fun ParkhubApp(
     reportViewModel: ReportViewModel = viewModel(factory = ReportViewModel.Factory),
     adminCreateLessonViewModel: AdminCreateLessonViewModel = viewModel(factory = AdminCreateLessonViewModel.Factory),
     adminUpdateLessonViewModel: AdminUpdateLessonViewModel = viewModel(factory = AdminUpdateLessonViewModel.Factory),
-    lessonViewModel: LessonViewModel = viewModel(factory = LessonViewModel.Factory)
+    lessonViewModel: LessonViewModel = viewModel(factory = LessonViewModel.Factory),
+    bukitViewModel: BukitViewModel = viewModel(factory = BukitViewModel.Factory),
+    lapanganViewModel: LapanganViewModel = viewModel(factory = LapanganViewModel.Factory),
+    gedungViewModel: GedungViewModel = viewModel(factory = GedungViewModel.Factory)
 ) {
     val localContext = LocalContext.current
     val token = homeViewModel.token.collectAsState()
+    val id = homeViewModel.id.collectAsState()
 
     NavHost(navController = navController, startDestination = PagesEnum.Login.name) {
         composable(route = PagesEnum.Login.name) {
@@ -183,30 +189,36 @@ fun ParkhubApp(
         }
 
         composable(route = PagesEnum.Bukit.name) {
-            val bukitViewModel: BukitViewModel =
-                viewModel(factory = BukitViewModel.Factory)
-            Bukit(viewModel = bukitViewModel)
+            Bukit(bukitViewModel, navController)
         }
 
         composable(route = PagesEnum.Lapangan.name) {
-            val lapanganViewModel: LapanganViewModel =
-                viewModel(factory = LapanganViewModel.Factory)
-            Lapangan(viewModel = lapanganViewModel)
+            Lapangan(lapanganViewModel, navController)
         }
 
         composable(route = PagesEnum.Gedung.name) {
-            Gedung(6)
+            Gedung(gedungViewModel, navController)
         }
 
-        composable(route = "submitReport") {
+        composable(route = PagesEnum.CreateReport.name) {
             SubmitReportView(
-                viewModel = reportViewModel,
-                userId = token.value,
-                navigateToReportPage = { navController.navigate("reportPage") },
-                navigateToHomePage = { navController.navigate(PagesEnum.Home.name) }
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White),
+                reportViewModel = reportViewModel,
+                navController = navController,
+                token = token.value,
+                id = id.value,
+                context = localContext
             )
         }
 
+        composable(route = PagesEnum.ReportPage.name){
+            ReportPageView(
+                reportViewModel = reportViewModel,
+                token = token.value,
+                context = localContext
+            )
+        }
     }
 }
-

@@ -29,15 +29,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.R
+import com.example.alp_vp.views.templates.BotAppBar
 import com.example.alp_vp.repositories.MockLocationRepository
 import com.example.alp_vp.repositories.MockUserRepository
 import com.example.alp_vp.uistates.LocationUIState
 import com.example.alp_vp.viewmodels.LapanganViewModel
-import com.example.alp_vp.views.lesson.NavigationItem
 
 @Composable
-fun Lapangan(viewModel: LapanganViewModel) {
+fun Lapangan(viewModel: LapanganViewModel, navController: NavController) {
     val locationUIState = viewModel.locationUIState
 
     LaunchedEffect(Unit) {
@@ -230,19 +232,7 @@ fun Lapangan(viewModel: LapanganViewModel) {
                 }
             }
 
-            // Bottom Navigation
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color(0xffffa001))
-                    .padding(vertical = 16.dp), // Increased padding
-                horizontalArrangement = Arrangement.SpaceAround,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                NavigationItem(R.drawable.warning, "Report", iconSize = 32.dp, fontSize = 14.sp)
-                NavigationItem(R.drawable.car, "Location", iconSize = 32.dp, fontSize = 14.sp)
-                NavigationItem(R.drawable.book, "Lesson", iconSize = 32.dp, fontSize = 14.sp)
-            }
+            BotAppBar(navController)
         }
     }
 }
@@ -273,5 +263,6 @@ fun HorizLapangan(color: Color) {
 fun LapanganPreview() {
     val viewModel = LapanganViewModel(MockLocationRepository(), MockUserRepository())
     viewModel.getAllLapangans()
-    Lapangan(viewModel = viewModel)
+    val navController = rememberNavController()
+    Lapangan(viewModel, navController)
 }

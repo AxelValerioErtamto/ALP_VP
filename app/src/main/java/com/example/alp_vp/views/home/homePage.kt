@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.R
 import com.example.alp_vp.enums.PagesEnum
+import com.example.alp_vp.views.templates.BotAppBar
 import com.example.alp_vp.viewmodels.HomeViewModel
 import com.example.alp_vp.views.lesson.NavigationItem
 
@@ -37,6 +39,9 @@ fun HomePage(
     token: String,
     context: Context
 ) {
+    val gedungSlots by homeViewModel.gedungSlots
+    val bukitSlots by homeViewModel.bukitSlots
+    val lapanganSlots by homeViewModel.lapanganSlots
     Column(modifier = Modifier.fillMaxSize()) {
 
         Column(
@@ -173,7 +178,7 @@ fun HomePage(
                                 )
                         ) {
                             Text(
-                                text = "Gedung: 4 slots left",
+                                text = "Gedung: $gedungSlots slots left",
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center
@@ -202,7 +207,7 @@ fun HomePage(
                                 )
                         ) {
                             Text(
-                                text = "Bukit: 4 slots left",
+                                text = "Bukit: $bukitSlots slots left",
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center
@@ -231,7 +236,7 @@ fun HomePage(
                                 )
                         ) {
                             Text(
-                                text = "Lapangan: 4 slots left",
+                                text = "Lapangan: $lapanganSlots slots left",
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center
@@ -246,16 +251,22 @@ fun HomePage(
                         .height(40.dp)
                         .clip(RoundedCornerShape(6.dp))
                         .background(Color.Gray)
+                        .clickable {
+                            navController.navigate(PagesEnum.ReportPage.name)
+                        } // Navigate on click
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.report), contentDescription = null,
+                        painter = painterResource(R.drawable.report),
+                        contentDescription = null,
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
 
-                    Box(modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(0.4f)))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.4f))
+                    )
 
                     Row(
                         modifier = Modifier.align(Alignment.Center),
@@ -274,6 +285,7 @@ fun HomePage(
                         )
                     }
                 }
+
                 Spacer(modifier = Modifier.height(35.dp))
                 Text(
                     text = "Recommended Lesson:",
@@ -327,42 +339,7 @@ fun HomePage(
 
         }
 
-        //Bottom Navigation
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color(0xffffa001))
-                .padding(vertical = 16.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(
-                modifier = Modifier.clickable {
-                    navController.navigate("submitReport") // Navigate to SubmitReport page
-                }
-            ) {
-                NavigationItem(
-                    R.drawable.warning,
-                    label = "Report",
-                    iconSize = 32.dp,
-                    fontSize = 14.sp
-                )
-            }
-            Box(
-                modifier = Modifier.clickable {
-                    navController.navigate(PagesEnum.Locations.name)
-                }
-            ) {
-                NavigationItem(R.drawable.car, "Location", iconSize = 32.dp, fontSize = 14.sp)
-            }
-            Box(
-                modifier = Modifier.clickable {
-                    navController.navigate(PagesEnum.LessonPage.name)
-                }
-            ) {
-                NavigationItem(R.drawable.book, "Lesson", iconSize = 32.dp, fontSize = 14.sp)
-            }
-        }
+        BotAppBar(navController)
     }
 }
 

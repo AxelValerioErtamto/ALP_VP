@@ -152,7 +152,8 @@ class AuthenticationViewModel(
                         if (res.isSuccessful) {
                             Log.d("response-data", "RESPONSE DATA: ${res.body()}")
 
-                            saveUsernameToken(res.body()!!.data.token!!, res.body()!!.data.username)
+                            //saveUsernameToken(res.body()!!.data.token!!, res.body()!!.data.username)
+                            saveUsernameTokenId(res.body()!!.data.token!!, res.body()!!.data.username, res.body()!!.data.id)
 
                             dataStatus = AuthenticationStatusUIState.Success(res.body()!!.data)
 
@@ -198,7 +199,8 @@ class AuthenticationViewModel(
                 call.enqueue(object: Callback<UserResponse> {
                     override fun onResponse(call: Call<UserResponse>, res: Response<UserResponse>) {
                         if (res.isSuccessful) {
-                            saveUsernameToken(res.body()!!.data.token!!, res.body()!!.data.username)
+                            //saveUsernameToken(res.body()!!.data.token!!, res.body()!!.data.username)
+                            saveUsernameTokenId(res.body()!!.data.token!!, res.body()!!.data.username, res.body()!!.data.id)
 
                             dataStatus = AuthenticationStatusUIState.Success(res.body()!!.data)
                             Log.d("THISNEW", "Username: $usernameInput")
@@ -242,12 +244,19 @@ class AuthenticationViewModel(
         }
     }
 
-    fun saveUsernameToken(token: String, username: String) {
-        viewModelScope.launch {
-            userRepository.saveUserToken(token)
-            userRepository.saveUsername(username)
-        }
+//    fun saveUsernameToken(token: String, username: String) {
+//        viewModelScope.launch {
+//            userRepository.saveUserToken(token)
+//            userRepository.saveUsername(username)
+//        }
+//    }
+fun saveUsernameTokenId(token: String, username: String, id: Int) {
+    viewModelScope.launch {
+        userRepository.saveUserToken(token)
+        userRepository.saveUsername(username)
+        userRepository.saveUserId(id)
     }
+}
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {

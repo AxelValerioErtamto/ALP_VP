@@ -1,3 +1,4 @@
+
 package com.example.alp_vp.repositories
 
 
@@ -16,12 +17,15 @@ import retrofit2.Call
 interface UserRepository {
     val currentUserToken: Flow<String>
     val currentUsername: Flow<String>
+    val currentUserId: Flow<Int>
 
     fun logout(token: String): Call<GeneralResponseModel>
 
     suspend fun saveUserToken(token: String)
 
     suspend fun saveUsername(username: String)
+
+    suspend fun saveUserId(id: Int)
 }
 
 class NetworkUserRepository(
@@ -31,6 +35,7 @@ class NetworkUserRepository(
     private companion object {
         val USER_TOKEN = stringPreferencesKey("token")
         val USERNAME = stringPreferencesKey("username")
+        val USER_ID = stringPreferencesKey("id")
     }
 
     override val currentUserToken: Flow<String> = userDataStore.data.map { preferences ->
@@ -39,6 +44,10 @@ class NetworkUserRepository(
 
     override val currentUsername: Flow<String> = userDataStore.data.map { preferences ->
         preferences[USERNAME] ?: "Unknown"
+    }
+
+    override val currentUserId: Flow<Int> = userDataStore.data.map { preferences ->
+        preferences[USER_ID]?.toIntOrNull() ?: 0
     }
 
     override suspend fun saveUserToken(token: String) {
@@ -53,6 +62,12 @@ class NetworkUserRepository(
         }
     }
 
+    override suspend fun saveUserId(id: Int) {
+        userDataStore.edit { preferences ->
+            preferences[USER_ID] = id.toString()
+        }
+    }
+
     override fun logout(token: String): Call<GeneralResponseModel> {
         return userAPIService.logout(token)
     }
@@ -61,25 +76,36 @@ class NetworkUserRepository(
 class MockUserRepository : UserRepository {
     private var mockUserToken: String = "mockToken"
     private var mockUsername: String = "mockUsername"
+    private var mockUserId: Int = 1 // Default mock user ID
 
     // Mocking currentUserToken as a Flow
     override val currentUserToken: Flow<String> = flow {
-        emit(mockUserToken)  // Simulate emitting a mock user token
+        emit(mockUserToken) // Simulate emitting a mock user token
     }
 
     // Mocking currentUsername as a Flow
     override val currentUsername: Flow<String> = flow {
-        emit(mockUsername)  // Simulate emitting a mock username
+        emit(mockUsername) // Simulate emitting a mock username
+    }
+
+    // Mocking currentUserId as a Flow
+    override val currentUserId: Flow<Int> = flow {
+        emit(mockUserId) // Simulate emitting a mock user ID
     }
 
     // Mocking saveUserToken (no-op)
     override suspend fun saveUserToken(token: String) {
-        mockUserToken = token  // Simulate saving the user token
+        mockUserToken = token // Simulate saving the user token
     }
 
     // Mocking saveUsername (no-op)
     override suspend fun saveUsername(username: String) {
-        mockUsername = username  // Simulate saving the username
+        mockUsername = username // Simulate saving the username
+    }
+
+    // Mocking saveUserId (no-op)
+    override suspend fun saveUserId(id: Int) {
+        mockUserId = id // Simulate saving the user ID
     }
 
     // Mocking the logout function, assuming a successful logout with a mock response
@@ -102,7 +128,7 @@ class MockUserRepository : UserRepository {
             override fun request(): okhttp3.Request = okhttp3.Request.Builder().url("http://example.com").build()
 
             override fun timeout(): Timeout {
-                return Timeout.NONE  // Returning a default timeout, you can adjust as necessary
+                return Timeout.NONE // Returning a default timeout
             }
         }
     }

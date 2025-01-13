@@ -8,13 +8,16 @@ import com.example.alp_vp.repositories.LocationRepository
 import com.example.alp_vp.repositories.NetworkAuthenticationRepository
 import com.example.alp_vp.repositories.NetworkLessonRepository
 import com.example.alp_vp.repositories.NetworkLocationRepository
+import com.example.alp_vp.repositories.NetworkReportRepository
 // import com.example.alp_vp.repositories.NetworkTodoRepository
 import com.example.alp_vp.repositories.NetworkUserRepository
+import com.example.alp_vp.repositories.ReportRepository
 // import com.example.alp_vp.repositories.TodoRepository
 import com.example.alp_vp.repositories.UserRepository
 import com.example.alp_vp.services.AuthenticationAPIService
 import com.example.alp_vp.services.LessonAPIService
 import com.example.alp_vp.services.LocationAPIService
+import com.example.alp_vp.services.ReportAPIService
 // import com.example.alp_vp.services.TodoAPIService
 import com.example.alp_vp.services.UserAPIService
 import okhttp3.OkHttpClient
@@ -27,6 +30,7 @@ interface AppContainer {
     val userRepository: UserRepository
     val locationRepository: LocationRepository
     val lessonRepository: LessonRepository
+    val reportRepository: ReportRepository
 }
 
 class DefaultAppContainer(
@@ -49,6 +53,10 @@ class DefaultAppContainer(
         retrofit.create(LocationAPIService::class.java)
     }
 
+    private val reportRetrofitService: ReportAPIService by lazy {
+        retrofit.create(ReportAPIService::class.java)
+    }
+
     private val lessonAPIService: LessonAPIService by lazy {
         retrofit.create(LessonAPIService::class.java)
     }
@@ -65,6 +73,9 @@ class DefaultAppContainer(
         NetworkLocationRepository(locationAPIService)
     }
 
+    override val reportRepository: ReportRepository by lazy {
+        NetworkReportRepository(reportRetrofitService)
+    }
     override val lessonRepository: LessonRepository by lazy {
         NetworkLessonRepository(lessonAPIService)
     }
