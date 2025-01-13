@@ -1,10 +1,5 @@
 package com.example.alp_vp.viewmodels
 
-// import com.example.alp_vp.models.GetAllTodoResponse
-// import com.example.alp_vp.repositories.TodoRepository
-// import com.example.alp_vp.uiStates.AuthenticationUIState
-// import com.example.alp_vp.uiStates.HomeUIState
-// import com.example.alp_vp.uiStates.TodoDataStatusUIState
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -55,12 +50,6 @@ class HomeViewModel(
         initialValue = 0
     )
 
-    fun clearDialog() {
-        // _homeUIState.update { state ->
-        //     state.copy(
-        //         showDialog = false
-        //     )
-        // }
     private val _gedungSlots = mutableStateOf(0)
     val gedungSlots: State<Int> get() = _gedungSlots
 
@@ -104,6 +93,7 @@ class HomeViewModel(
                     Log.e("HomeViewModel", "Token is empty or unavailable.")
                 }
             }
+        }
     }
 
     // Function to calculate available slots based on isFilled
@@ -111,6 +101,7 @@ class HomeViewModel(
         val totalSpots = locations.size
         val filledSpots = locations.count { it.isFilled }
         return totalSpots - filledSpots // Available slots are the total minus filled spots
+    }
 
     fun logoutUser(token: String, navController: NavHostController) {
         viewModelScope.launch {

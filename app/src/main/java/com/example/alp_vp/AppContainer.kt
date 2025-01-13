@@ -3,17 +3,19 @@ package com.example.alp_vp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.example.alp_vp.repositories.AuthenticationRepository
+import com.example.alp_vp.repositories.LessonRepository
 import com.example.alp_vp.repositories.LocationRepository
 import com.example.alp_vp.repositories.NetworkAuthenticationRepository
+import com.example.alp_vp.repositories.NetworkLessonRepository
 import com.example.alp_vp.repositories.NetworkLocationRepository
 import com.example.alp_vp.repositories.NetworkReportRepository
 // import com.example.alp_vp.repositories.NetworkTodoRepository
 import com.example.alp_vp.repositories.NetworkUserRepository
 import com.example.alp_vp.repositories.ReportRepository
-import com.example.alp_vp.repositories.ReportRepository
 // import com.example.alp_vp.repositories.TodoRepository
 import com.example.alp_vp.repositories.UserRepository
 import com.example.alp_vp.services.AuthenticationAPIService
+import com.example.alp_vp.services.LessonAPIService
 import com.example.alp_vp.services.LocationAPIService
 import com.example.alp_vp.services.ReportAPIService
 // import com.example.alp_vp.services.TodoAPIService

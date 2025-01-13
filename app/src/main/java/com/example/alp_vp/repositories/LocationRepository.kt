@@ -114,7 +114,3 @@ class MockLocationRepository : LocationRepository {
         onResult(null)
     }
 }
-
-
-
-

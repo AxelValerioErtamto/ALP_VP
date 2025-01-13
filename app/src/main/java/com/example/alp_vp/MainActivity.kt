@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.alp_vp.ui.theme.ALP_VPTheme
-import com.example.parkhub.views.ParkhubApp
+import com.example.alp_vp.views.ParkhubApp
 
 
 class MainActivity : ComponentActivity() {

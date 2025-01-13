@@ -8,6 +8,10 @@ enum class PagesEnum() {
     Admin,
     CreateLesson,
     ManageLesson,
+    Locations,
+    Bukit,
+    Gedung,
+    Lapangan,
     CreateReport,
     ReportPage,
 }

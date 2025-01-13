@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.sp
 import com.example.alp_vp.R
 import com.example.alp_vp.repositories.MockLocationRepository
 import com.example.alp_vp.repositories.MockUserRepository
+import com.example.alp_vp.uistates.LocationUIState
+import com.example.alp_vp.viewmodels.LapanganViewModel
 import com.example.alp_vp.views.lesson.NavigationItem
 
 @Composable
