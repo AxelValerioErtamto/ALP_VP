@@ -65,8 +65,8 @@ fun LocationPageView(
                     navController
                 )
             }
+            BotAppBar(navController)
         }
-        BotAppBar(navController)
     }
 }
 
