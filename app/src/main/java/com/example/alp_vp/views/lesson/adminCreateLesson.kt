@@ -1,38 +1,44 @@
 package com.example.alp_vp.views.lesson
 
 import android.content.Context
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.alp_vp.R
-import com.example.alp_vp.viewmodels.HomeViewModel
-
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.alp_vp.viewmodels.AdminCreateLessonViewModel
+import com.example.alp_vp.repositories.LessonRepository
 @Composable
 fun AdminCreateLesson(
     modifier: Modifier = Modifier,
-    homeViewModel: HomeViewModel,
     navController: NavHostController,
     token: String,
-    context: Context
+    context: Context,
+    adminCreateLessonViewModel: AdminCreateLessonViewModel // Correctly using this parameter
 ) {
+    // Observe the state from the ViewModel
+    val title by adminCreateLessonViewModel.title
+    val description by adminCreateLessonViewModel.description
+    val content by adminCreateLessonViewModel.content
+    val imageUri by adminCreateLessonViewModel.imageUri
+    val isLoading by adminCreateLessonViewModel.isLoading
+    val creationError by adminCreateLessonViewModel.creationError
+
+
     Column(modifier = Modifier.fillMaxSize()) {
-        // TopAppBar
+        // Top Bar
         Column(
             modifier = Modifier
                 .background(color = Color(0xffffa001))
@@ -44,199 +50,92 @@ fun AdminCreateLesson(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        "Park",
-                        color = Color.White,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.W600
-                    )
-                    Spacer(modifier = Modifier.width(2.dp))
-                    Box(
-                        Modifier
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(Color.White)
-                            .padding(horizontal = 4.dp, vertical = 2.dp)
-                    ) {
-                        Text(
-                            "hub",
-                            color = Color(0xffffa001),
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.W600
-                        )
-                    }
-                }
-                Button(
-                    onClick = {
-                        homeViewModel.logoutUser(token, navController)
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9534F)),
-                    shape = RoundedCornerShape(8.dp),
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    Text(
-                        text = "Logout",
-                        fontSize = 16.sp,
-                        color = Color.White
-                    )
-                }
+                Text(
+                    text = "Create Lesson",
+                    color = Color.White,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.W600
+                )
             }
         }
 
         // Content Area
-        Box(
+        Column(
             modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-                .background(Color.White),
-            contentAlignment = Alignment.TopStart
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
         ) {
-            Column(
-                Modifier
+            // Title Input
+            Text("Title:", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.Black)
+            OutlinedTextField(
+                value = title,
+                onValueChange = { adminCreateLessonViewModel.updateTitle(it) }, // Use viewModel here
+                modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
+                    .padding(vertical = 8.dp),
+                placeholder = { Text(text = "Enter title here") },
+                shape = RoundedCornerShape(8.dp)
+            )
+
+            // Description Input
+            Text("Description:", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.Black)
+            OutlinedTextField(
+                value = description,
+                onValueChange = { adminCreateLessonViewModel.updateDescription(it) }, // Use viewModel here
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                placeholder = { Text(text = "Enter description here") },
+                shape = RoundedCornerShape(8.dp)
+            )
+
+            // Content Input
+            Text("Content:", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.Black)
+            OutlinedTextField(
+                value = content,
+                onValueChange = { adminCreateLessonViewModel.updateContent(it) }, // Use viewModel here
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .padding(vertical = 8.dp),
+                placeholder = { Text(text = "Enter content here") },
+                shape = RoundedCornerShape(8.dp)
+            )
+
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Display Error Message
+            creationError?.let {
+                Text(
+                    text = it,
+                    color = Color.Red,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(bottom = 16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.Black
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Create Lesson",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
-                }
+                )
+            }
 
-                Text(
-                    text = "Title:",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Black
-                )
-                OutlinedTextField(
-                    value = "",
-                    onValueChange = { /* Handle title input */ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    placeholder = { Text(text = "Enter title here") },
-                    shape = RoundedCornerShape(8.dp)
-                )
-
-                Text(
-                    text = "Description:",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Black
-                )
-                OutlinedTextField(
-                    value = "",
-                    onValueChange = { /* Handle description input */ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    placeholder = { Text(text = "Enter description here") },
-                    shape = RoundedCornerShape(8.dp)
-                )
-
-                Text(
-                    text = "Content:",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Black
-                )
-                OutlinedTextField(
-                    value = "",
-                    onValueChange = { /* Handle content input */ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(150.dp)
-                        .padding(vertical = 8.dp),
-                    placeholder = { Text(text = "Enter content here") },
-                    shape = RoundedCornerShape(8.dp)
-                )
-
-                Text(
-                    text = "Image / Illustration:",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Black
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
-                        .height(56.dp)
-                        .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(8.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = "Upload Icon",
-                            modifier = Modifier.size(24.dp),
-                            tint = Color.Gray
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "Add file", fontSize = 16.sp, color = Color.Gray)
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Button(
-                    onClick = { /* Handle create action */ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFFA726),
-                        contentColor = Color.White
-                    ),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
+            // Create Button
+            Button(
+                onClick = { adminCreateLessonViewModel.createLesson(token) }, // Use viewModel here
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFFFA726),
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                if (isLoading) {
+                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
+                } else {
                     Text(text = "Create", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
-
-        // Bottom Navigation
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color(0xffffa001))
-                .padding(vertical = 16.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            NavigationItem(R.drawable.warning, "Report", iconSize = 32.dp, fontSize = 14.sp)
-            NavigationItem(R.drawable.car, "Location", iconSize = 32.dp, fontSize = 14.sp)
-            NavigationItem(R.drawable.book, "Lesson", iconSize = 32.dp, fontSize = 14.sp)
-        }
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun AdminCreateLessonPreview() {
-    AdminCreateLesson(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        homeViewModel = viewModel(factory = HomeViewModel.Factory),
-        navController = rememberNavController(),
-        token = "",
-        context = LocalContext.current
-    )
 }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,6 +38,9 @@ fun HomePage(
     token: String,
     context: Context
 ) {
+    val gedungSlots by homeViewModel.gedungSlots
+    val bukitSlots by homeViewModel.bukitSlots
+    val lapanganSlots by homeViewModel.lapanganSlots
     Column(modifier = Modifier.fillMaxSize()) {
 
         Column(
@@ -173,7 +177,7 @@ fun HomePage(
                                 )
                         ) {
                             Text(
-                                text = "Gedung: 4 slots left",
+                                text = "Gedung: $gedungSlots slots left",
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center
@@ -202,7 +206,7 @@ fun HomePage(
                                 )
                         ) {
                             Text(
-                                text = "Bukit: 4 slots left",
+                                text = "Bukit: $bukitSlots slots left",
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center
@@ -231,7 +235,7 @@ fun HomePage(
                                 )
                         ) {
                             Text(
-                                text = "Lapangan: 4 slots left",
+                                text = "Lapangan: $lapanganSlots slots left",
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center

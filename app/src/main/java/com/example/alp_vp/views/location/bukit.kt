@@ -194,7 +194,7 @@ fun VertiBukit(color: Color, num: String) {
             .background(color)
             .size(12.dp, 24.dp)
     ) {
-        Text(num, fontSize = 4.sp)
+//        Text(num, fontSize = 4.sp)
     }
     Spacer(Modifier.width(2.dp))
 }
@@ -207,7 +207,7 @@ fun HorizBukit(color: Color, num: String) {
             .background(color)
             .size(24.dp, 12.dp)
     ) {
-        Text(num, fontSize = 4.sp)
+//        Text(num, fontSize = 4.sp)
     }
     Spacer(Modifier.height(2.dp))
 }
