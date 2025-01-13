@@ -8,15 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
-fun TopAppBar() {
+fun TopAppBar(navController: NavController) {
     Column(
         modifier = Modifier
             .background(color = Color(0xffffa001))
             .fillMaxWidth()
             .padding(top = 40.dp, start = 20.dp, end = 20.dp, bottom = 20.dp)
     ) {
-        LogoSmall()
+        LogoSmall(navController)
     }
 }

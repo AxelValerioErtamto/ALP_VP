@@ -1,6 +1,7 @@
 package com.example.alp_vp.views.templates
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.alp_vp.enums.PagesEnum
 
 @Composable
 fun LogoBig() {
@@ -41,13 +44,15 @@ fun LogoBig() {
 }
 
 @Composable
-fun LogoSmall() {
+fun LogoSmall(navController: NavController) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.clickable {
+            navController.navigate(PagesEnum.Home.name)
+        }, verticalAlignment = Alignment.CenterVertically) {
             Text(
                 "Park",
                 color = Color.White,

@@ -37,7 +37,7 @@ fun LocationPageView(
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             // TopAppBar
-            TopAppBar()
+            TopAppBar(navController)
 
             // Vertical Rectangles with Images
             Column(
@@ -65,8 +65,8 @@ fun LocationPageView(
                     navController
                 )
             }
+            BotAppBar(navController)
         }
-        BotAppBar(navController)
     }
 }
 

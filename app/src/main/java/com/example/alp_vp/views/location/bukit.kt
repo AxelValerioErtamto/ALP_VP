@@ -41,7 +41,9 @@ fun Bukit(viewModel: BukitViewModel, navController: NavHostController) {
         viewModel.getAllBukits()
     }
     if (locationUIState is LocationUIState.Loading) {
-        CircularProgressIndicator()
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
     }
     if (locationUIState is LocationUIState.Failed) {
         Text("Error: ${locationUIState.errorMessage}")
@@ -51,7 +53,7 @@ fun Bukit(viewModel: BukitViewModel, navController: NavHostController) {
         val nama = viewModel.getBukitNama()
 
         Column(modifier = Modifier.fillMaxSize()) {
-            TopAppBar()
+            TopAppBar(navController)
 
             // Content Area
             Box(
@@ -122,7 +124,6 @@ fun Bukit(viewModel: BukitViewModel, navController: NavHostController) {
                     }
                 }
             }
-
             BotAppBar(navController)
         }
     }

@@ -13,30 +13,26 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.R
-import com.example.alp_vp.views.templates.BotAppBar
 import com.example.alp_vp.repositories.MockLocationRepository
 import com.example.alp_vp.repositories.MockUserRepository
 import com.example.alp_vp.uistates.LocationUIState
 import com.example.alp_vp.viewmodels.LapanganViewModel
+import com.example.alp_vp.views.templates.BotAppBar
+import com.example.alp_vp.views.templates.TopAppBar
 
 @Composable
 fun Lapangan(viewModel: LapanganViewModel, navController: NavController) {
@@ -47,7 +43,9 @@ fun Lapangan(viewModel: LapanganViewModel, navController: NavController) {
     }
 
     if (locationUIState is LocationUIState.Loading) {
-        CircularProgressIndicator()
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
     }
 
     if (locationUIState is LocationUIState.Failed) {
@@ -58,53 +56,7 @@ fun Lapangan(viewModel: LapanganViewModel, navController: NavController) {
         val colors = viewModel.getLapanganColors()
 
         Column(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier
-                    .background(color = Color(0xffffa001))
-                    .fillMaxWidth()
-                    .padding(top = 40.dp, start = 20.dp, end = 20.dp, bottom = 20.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            "Park",
-                            color = Color.White,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.W600
-                        )
-                        Spacer(modifier = Modifier.width(2.dp))
-                        Box(
-                            Modifier
-                                .clip(RoundedCornerShape(6.dp))
-                                .background(Color.White)
-                                .padding(horizontal = 4.dp, vertical = 2.dp)
-                        ) {
-                            Text(
-                                "hub",
-                                color = Color(0xffffa001),
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.W600
-                            )
-                        }
-                    }
-                    Button(
-                        onClick = { /* Handle logout */ },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9534F)),
-                        shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier.padding(4.dp)
-                    ) {
-                        Text(
-                            text = "Logout",
-                            fontSize = 16.sp,
-                            color = Color.White
-                        )
-                    }
-                }
-            }
+            TopAppBar(navController)
 
             // Content Area
             Box(
@@ -119,35 +71,71 @@ fun Lapangan(viewModel: LapanganViewModel, navController: NavController) {
                         .padding(8.dp)
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center) {
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Row {
                         Spacer(Modifier.width(36.dp))
                         for (i in 260 until 274) {
                             VertiLapangan(colors[i])
                         }
                         Spacer(Modifier.width(4.dp))
-                        Box(Modifier.background(Color.Gray).size(24.dp, 24.dp), contentAlignment = Alignment.Center){
-                            Image(painterResource(R.drawable.baseline_keyboard_double_arrow_up_24), contentDescription = null)
+                        Box(
+                            Modifier
+                                .background(Color.Gray)
+                                .size(24.dp, 24.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                painterResource(R.drawable.baseline_keyboard_double_arrow_up_24),
+                                contentDescription = null
+                            )
                         }
                         Spacer(Modifier.width(3.dp))
-                        Box(Modifier.background(Color.Gray).size(24.dp, 24.dp), contentAlignment = Alignment.Center){
-                            Image(painterResource(R.drawable.baseline_keyboard_double_arrow_down_24), contentDescription = null)
+                        Box(
+                            Modifier
+                                .background(Color.Gray)
+                                .size(24.dp, 24.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                painterResource(R.drawable.baseline_keyboard_double_arrow_down_24),
+                                contentDescription = null
+                            )
                         }
                     }
-                    Row(Modifier.background(Color.Gray).size(264.dp, 24.dp), horizontalArrangement = Arrangement.SpaceEvenly){
-                        Image(painterResource(R.drawable.baseline_keyboard_double_arrow_right_24), contentDescription = null)
-                        Image(painterResource(R.drawable.baseline_keyboard_double_arrow_right_24), contentDescription = null)
+                    Row(
+                        Modifier
+                            .background(Color.Gray)
+                            .size(264.dp, 24.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Image(
+                            painterResource(R.drawable.baseline_keyboard_double_arrow_right_24),
+                            contentDescription = null
+                        )
+                        Image(
+                            painterResource(R.drawable.baseline_keyboard_double_arrow_right_24),
+                            contentDescription = null
+                        )
                         Spacer(Modifier.height(0.dp))
                     }
                     Row {
                         Column {
-                            for (i in 259 downTo  220) {
+                            for (i in 259 downTo 220) {
                                 HorizLapangan(colors[i])
                             }
                         }
                         Spacer(Modifier.width(8.dp))
-                        Box(Modifier.background(Color.Gray).size(24.dp, 492.dp), contentAlignment = Alignment.Center){
-                            Image(painterResource(R.drawable.baseline_keyboard_double_arrow_up_24), contentDescription = null)
+                        Box(
+                            Modifier
+                                .background(Color.Gray)
+                                .size(24.dp, 492.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                painterResource(R.drawable.baseline_keyboard_double_arrow_up_24),
+                                contentDescription = null
+                            )
                         }
                         Spacer(Modifier.width(8.dp))
                         Column {
@@ -162,13 +150,24 @@ fun Lapangan(viewModel: LapanganViewModel, navController: NavController) {
                             }
                         }
                         Spacer(Modifier.width(8.dp))
-                        Box(Modifier.background(Color.Gray).size(24.dp, 492.dp), contentAlignment = Alignment.Center){
-                            Image(painterResource(R.drawable.baseline_keyboard_double_arrow_up_24), contentDescription = null)
+                        Box(
+                            Modifier
+                                .background(Color.Gray)
+                                .size(24.dp, 492.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                painterResource(R.drawable.baseline_keyboard_double_arrow_up_24),
+                                contentDescription = null
+                            )
                         }
                         Spacer(Modifier.width(8.dp))
                         Column {
                             Spacer(Modifier.height(4.dp))
-                            Row(Modifier.width(120.dp), horizontalArrangement = Arrangement.Center) {
+                            Row(
+                                Modifier.width(120.dp),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
                                 for (i in 274 until 281) {
                                     VertiLapangan(colors[i])
                                 }
@@ -196,8 +195,16 @@ fun Lapangan(viewModel: LapanganViewModel, navController: NavController) {
                                     }
                                 }
                                 Spacer(Modifier.width(8.dp))
-                                Box(Modifier.background(Color.Gray).size(24.dp, 312.dp), contentAlignment = Alignment.Center){
-                                    Image(painterResource(R.drawable.baseline_keyboard_double_arrow_up_24), contentDescription = null)
+                                Box(
+                                    Modifier
+                                        .background(Color.Gray)
+                                        .size(24.dp, 312.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Image(
+                                        painterResource(R.drawable.baseline_keyboard_double_arrow_up_24),
+                                        contentDescription = null
+                                    )
                                 }
                                 Spacer(Modifier.width(8.dp))
                                 Column {
@@ -214,8 +221,16 @@ fun Lapangan(viewModel: LapanganViewModel, navController: NavController) {
                             }
                         }
                         Spacer(Modifier.width(8.dp))
-                        Box(Modifier.background(Color.Gray).size(24.dp, 492.dp), contentAlignment = Alignment.Center){
-                            Image(painterResource(R.drawable.baseline_keyboard_double_arrow_down_24), contentDescription = null)
+                        Box(
+                            Modifier
+                                .background(Color.Gray)
+                                .size(24.dp, 492.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                painterResource(R.drawable.baseline_keyboard_double_arrow_down_24),
+                                contentDescription = null
+                            )
                         }
                         Spacer(Modifier.width(8.dp))
                         Column {
@@ -223,11 +238,6 @@ fun Lapangan(viewModel: LapanganViewModel, navController: NavController) {
                                 HorizLapangan(colors[i])
                             }
                         }
-                    }
-                    Row(Modifier.background(Color.Gray).size(264.dp, 24.dp), horizontalArrangement = Arrangement.SpaceEvenly){
-                        Image(painterResource(R.drawable.baseline_keyboard_double_arrow_left_24), contentDescription = null)
-                        Image(painterResource(R.drawable.baseline_keyboard_double_arrow_left_24), contentDescription = null)
-                        Image(painterResource(R.drawable.baseline_keyboard_double_arrow_left_24), contentDescription = null)
                     }
                 }
             }

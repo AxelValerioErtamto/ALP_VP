@@ -49,7 +49,9 @@ fun Gedung(viewModel: GedungViewModel, navController: NavController) {
     }
 
     if (locationUIState is LocationUIState.Loading) {
-        CircularProgressIndicator()
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
     }
 
     if (locationUIState is LocationUIState.Failed) {
@@ -64,7 +66,7 @@ fun Gedung(viewModel: GedungViewModel, navController: NavController) {
         }
 
         Column(modifier = Modifier.fillMaxSize()) {
-            TopAppBar()
+            TopAppBar(navController)
 
             // Main Content
             Box(
