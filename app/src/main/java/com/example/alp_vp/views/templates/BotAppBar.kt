@@ -47,6 +47,12 @@ fun BotAppBar(navController: NavController) {
         ) {
             NavigationItem(R.drawable.car, "Location", iconSize = 32.dp, fontSize = 14.sp)
         }
-        NavigationItem(R.drawable.book, "Lesson", iconSize = 32.dp, fontSize = 14.sp)
+        Box(
+            modifier = Modifier.clickable {
+                navController.navigate(PagesEnum.LessonPage.name)
+            }
+        ) {
+            NavigationItem(R.drawable.book, "Lesson", iconSize = 32.dp, fontSize = 14.sp)
+        }
     }
 }
