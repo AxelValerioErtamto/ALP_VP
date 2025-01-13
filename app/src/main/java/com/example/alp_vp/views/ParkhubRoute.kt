@@ -41,7 +41,10 @@ fun ParkhubApp(
     homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
     authenticationViewModel: AuthenticationViewModel = viewModel(factory = AuthenticationViewModel.Factory),
     reportViewModel: ReportViewModel = viewModel(factory = ReportViewModel.Factory),
-    adminCreateLessonViewModel: AdminCreateLessonViewModel = viewModel(factory = AdminCreateLessonViewModel.Factory)
+    adminCreateLessonViewModel: AdminCreateLessonViewModel = viewModel(factory = AdminCreateLessonViewModel.Factory),
+    bukitViewModel: BukitViewModel = viewModel(factory = BukitViewModel.Factory),
+    lapanganViewModel: LapanganViewModel = viewModel(factory = LapanganViewModel.Factory),
+    gedungViewModel: GedungViewModel = viewModel(factory = GedungViewModel.Factory)
 ) {
     val localContext = LocalContext.current
     val token = homeViewModel.token.collectAsState()
@@ -123,21 +126,15 @@ fun ParkhubApp(
         }
 
         composable(route = PagesEnum.Bukit.name) {
-            val bukitViewModel: BukitViewModel =
-                viewModel(factory = BukitViewModel.Factory)
-            Bukit(viewModel = bukitViewModel)
+            Bukit(bukitViewModel, navController)
         }
 
         composable(route = PagesEnum.Lapangan.name) {
-            val lapanganViewModel: LapanganViewModel =
-                viewModel(factory = LapanganViewModel.Factory)
-            Lapangan(viewModel = lapanganViewModel)
+            Lapangan(lapanganViewModel, navController)
         }
 
         composable(route = PagesEnum.Gedung.name) {
-            val gedungViewModel: GedungViewModel =
-                viewModel(factory = GedungViewModel.Factory)
-            Gedung(viewModel = gedungViewModel)
+            Gedung(gedungViewModel, navController)
         }
 
         composable(route = PagesEnum.CreateReport.name) {

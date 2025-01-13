@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -35,9 +34,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.enums.PagesEnum
-import com.example.alp_vp.ui.theme.ALP_VPTheme
 import com.example.alp_vp.uistates.AuthenticationStatusUIState
 import com.example.alp_vp.viewmodels.AuthenticationViewModel
+import com.example.alp_vp.views.templates.LogoBig
 
 @Composable
 fun Register(
@@ -63,22 +62,7 @@ fun Register(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-            Text("Park", color = Color.White, fontSize = 36.sp, fontWeight = FontWeight.W600)
-            Spacer(Modifier.width(2.dp))
-            Column(
-                Modifier
-                    .background(Color.White)
-                    .padding(horizontal = 4.dp, vertical = 2.dp)
-            ) {
-                Text(
-                    "hub",
-                    color = Color(0xffffa001),
-                    fontSize = 36.sp,
-                    fontWeight = FontWeight.W600
-                )
-            }
-        }
+        LogoBig()
         Column(
             Modifier
                 .background(color = Color(0xffffe3c7))
