@@ -27,12 +27,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.alp_vp.R
-import com.example.alp_vp.views.templates.BotAppBar
-import com.example.alp_vp.views.templates.TopAppBar
 import com.example.alp_vp.repositories.MockLocationRepository
 import com.example.alp_vp.repositories.MockUserRepository
 import com.example.alp_vp.uistates.LocationUIState
 import com.example.alp_vp.viewmodels.BukitViewModel
+import com.example.alp_vp.views.templates.BotAppBar
+import com.example.alp_vp.views.templates.TopAppBar
 
 @Composable
 fun Bukit(viewModel: BukitViewModel, navController: NavHostController) {
@@ -113,7 +113,8 @@ fun Bukit(viewModel: BukitViewModel, navController: NavHostController) {
                                 }
                                 Box(
                                     Modifier
-                                        .size(300.dp, 400.dp)
+                                        .height(400.dp)
+                                        .fillMaxWidth()
                                         .background(Color(0xff4c6444)),
                                     contentAlignment = Alignment.Center
                                 ) {
