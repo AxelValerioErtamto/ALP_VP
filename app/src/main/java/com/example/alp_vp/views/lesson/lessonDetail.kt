@@ -16,13 +16,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.alp_vp.models.LessonModel
 import com.example.alp_vp.R
 
+// In LessonDetail
 @Composable
-fun LessonDetail() {
+fun LessonDetail(
+    lesson: LessonModel, // Pass the selected lesson here
+    onBackClick: () -> Unit // Function to handle back button
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         // TopAppBar
         Column(
@@ -91,15 +95,17 @@ fun LessonDetail() {
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(bottom = 16.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.Black,
-                        modifier = Modifier.size(32.dp)
-                    )
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.Black,
+                            modifier = Modifier.size(32.dp)
+                        )
+                    }
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Cara Parkir Paralel:",
+                        text = lesson.title, // Use the lesson title
                         color = Color.Black,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
@@ -107,33 +113,29 @@ fun LessonDetail() {
                 }
 
                 // Image in the center with reduced horizontal padding
-                Image(
-                    painter = painterResource(id = R.drawable.paralelpark),
-                    contentDescription = "Paralel Park Image",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp) // Adjust the height as needed
-                        .padding(horizontal = 16.dp) // Reduced left and right padding
-                        .padding(bottom = 16.dp),
-                    contentScale = ContentScale.Crop
-                )
+//                lesson.image?.let {
+//                    Image(
+//                        painter = painterResource(id = it), // Assuming image ID is passed as a resource
+//                        contentDescription = "Lesson Image",
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .height(200.dp) // Adjust the height as needed
+//                            .padding(horizontal = 16.dp) // Reduced left and right padding
+//                            .padding(bottom = 16.dp),
+//                        contentScale = ContentScale.Crop
+//                    )
+//                }
 
                 // Justified text paragraph with reduced horizontal padding
                 Text(
-                    text = "This is a sample paragraph for the justified text under the image. " +
-                            "It should continue and fill the available space while maintaining justified alignment.\n\n" +
-                            "You can add more content here. The text will be wrapped and justified correctly. " +
-                            "This is an example of how to handle long text in a readable way using Jetpack Compose.",
+                    text = lesson.content, // Use the lesson content
                     color = Color.Black,
                     fontSize = 16.sp,
                     textAlign = TextAlign.Justify,
                     modifier = Modifier.padding(horizontal = 16.dp) // Reduced left and right padding
                 )
-
             }
-
         }
-
 
         // Bottom Navigation
         Row(
@@ -149,10 +151,4 @@ fun LessonDetail() {
             NavigationItem(R.drawable.book, "Lesson", iconSize = 32.dp, fontSize = 14.sp)
         }
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun LessonDetailPreview() {
-    LessonDetail()
 }

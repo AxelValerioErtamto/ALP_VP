@@ -1,6 +1,5 @@
 package com.example.alp_vp.viewmodels
 
-import android.content.ContentResolver
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
@@ -17,20 +16,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-import android.content.Context
-import android.net.Uri
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
-import android.provider.OpenableColumns
-import android.util.Log
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.FileOutputStream
-import java.io.InputStream
 
 class AdminCreateLessonViewModel(
     private val lessonRepository: LessonRepository // Injecting the repository
@@ -45,9 +30,6 @@ class AdminCreateLessonViewModel(
 
     private val _content = mutableStateOf("")
     val content: State<String> get() = _content
-
-    private val _imageUri = mutableStateOf<String?>(null)
-    val imageUri: State<String?> get() = _imageUri
 
     private val _isLoading = mutableStateOf(false) // Track loading state
     val isLoading: State<Boolean> get() = _isLoading
@@ -68,10 +50,6 @@ class AdminCreateLessonViewModel(
         _content.value = newContent
     }
 
-    fun updateImageUri(newUri: String?) {
-        _imageUri.value = newUri
-    }
-
     // Function to handle lesson creation
     fun createLesson(token: String) {
         // Validation check
@@ -90,7 +68,6 @@ class AdminCreateLessonViewModel(
                 _title.value,
                 _description.value,
                 _content.value,
-                _imageUri.value ?: "" // Using empty string if imageUri is null
             ).enqueue(object : Callback<GeneralResponseModel> {
                 override fun onResponse(
                     call: Call<GeneralResponseModel>,

@@ -32,7 +32,6 @@ fun AdminCreateLesson(
     val title by adminCreateLessonViewModel.title
     val description by adminCreateLessonViewModel.description
     val content by adminCreateLessonViewModel.content
-    val imageUri by adminCreateLessonViewModel.imageUri
     val isLoading by adminCreateLessonViewModel.isLoading
     val creationError by adminCreateLessonViewModel.creationError
 
